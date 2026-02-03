@@ -310,6 +310,92 @@ p{
   border:none;
 }
 
+/* ===== ROBLOX GAMES + GROUPS (NEW) ===== */
+.rbx-wrap{
+  margin-top:16px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--borderSoft);
+  border-radius:18px;
+  padding:16px;
+}
+
+.rbx-title{
+  font-family:"Space Grotesk",sans-serif;
+  font-size:18px;
+  margin:0 0 10px;
+  color:rgba(238,240,255,0.95);
+}
+
+.rbx-sub{
+  margin:0 0 14px;
+  font-size:14px;
+  color:rgba(178,182,255,0.9);
+  line-height:1.55;
+}
+
+.rbx-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:12px;
+}
+
+.rbx-item{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  text-decoration:none;
+  color:var(--text);
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:12px;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.rbx-item:hover{
+  transform:translateY(-2px);
+  box-shadow:0 0 34px rgba(0,255,213,0.12);
+  border-color:rgba(255,255,255,0.18);
+}
+
+.rbx-thumb{
+  width:52px;
+  height:52px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:linear-gradient(135deg, rgba(127,0,255,0.28), rgba(0,255,213,0.18));
+  flex:0 0 auto;
+  overflow:hidden;
+}
+
+.rbx-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.rbx-meta{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0;
+}
+
+.rbx-name{
+  font-weight:900;
+  font-size:14px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.rbx-type{
+  font-size:12px;
+  color:rgba(178,182,255,0.85);
+  font-weight:800;
+}
+
 /* ===== CONTACT (Crux-ish UI card + copy link) ===== */
 .contact-card{
   width:100%;
@@ -395,6 +481,31 @@ footer{
   h1{ font-size:42px; }
   .nav-links{ gap:8px; }
   .nav-links a{ padding:0 12px; font-size:13px; }
+
+  /* ONLY show the purple gradient background on mobile (no interactive canvas) */
+  #bg{ display:none; }
+}
+
+/* Make nav usable on small mobile screens without breaking desktop */
+@media (max-width: 520px){
+  nav{ height:84px; }
+  .nav-inner{ padding:0 14px; }
+  .nav-links{
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    gap:8px;
+    padding-bottom:6px;
+    max-width:72vw;
+  }
+  .nav-links::-webkit-scrollbar{ height:0; }
+  .nav-links a{
+    flex:0 0 auto;
+    height:36px;
+    padding:0 10px;
+    font-size:12px;
+    border-radius:10px;
+  }
 }
 
 @keyframes shift{
@@ -483,18 +594,25 @@ footer{
 
       <div class="featured-video">
         <!-- BIG featured video -->
-        <iframe src="https://www.youtube.com/embed/0Qt2BvHenMk?vq=hd1080" allowfullscreen></iframe>
+        <iframe class="yt" src="https://www.youtube.com/embed/0Qt2BvHenMk?vq=hd1080" allowfullscreen></iframe>
       </div>
     </div>
 
     <div class="video-grid">
       <!-- Add / duplicate these video cards -->
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
-      <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+      <div class="video-card"><iframe class="yt" src="https://www.youtube.com/embed/VIDEO_ID?vq=hd1080" allowfullscreen></iframe></div>
+    </div>
+
+    <!-- NEW: Popular games + groups -->
+    <div class="rbx-wrap">
+      <div class="rbx-title">Popular Roblox Games & Groups</div>
+      <p class="rbx-sub">Clickable cards with icons. Replace the IDs below with your real Universe IDs (games) and Group IDs (groups) and the icons will auto-load.</p>
+      <div class="rbx-grid" id="rbxGrid"></div>
     </div>
   </div>
 </section>
@@ -562,78 +680,185 @@ document.getElementById("copyDiscordBtn").addEventListener("click", async () => 
   }
 });
 
-/* ===== BACKGROUND NETWORK (unchanged behavior, aligned mouse) ===== */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-let w, h;
-let mouse = { x: 0, y: 0 };
+/* ===== YouTube: try to force 1080p (best-effort) ===== */
+(function forceYouTube1080p(){
+  const frames = document.querySelectorAll("iframe.yt");
+  frames.forEach(f => {
+    try{
+      const src = f.getAttribute("src") || "";
+      if (!src.includes("youtube.com/embed/")) return;
 
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
+      const hasQuery = src.includes("?");
+      const joiner = hasQuery ? "&" : "?";
 
-window.addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-const nodes = [];
-const COUNT = 120;
-
-for (let i = 0; i < COUNT; i++) {
-  nodes.push({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    r: Math.random() * 3 + 1,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4
-  });
-}
-
-function draw() {
-  ctx.clearRect(0, 0, w, h);
-
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    a.x += a.vx;
-    a.y += a.vy;
-
-    if (a.x < 0 || a.x > w) a.vx *= -1;
-    if (a.y < 0 || a.y > h) a.vy *= -1;
-
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 150) {
-        ctx.strokeStyle = `rgba(127,0,255,${1 - d / 150})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+      // If vq already present, leave it. Otherwise add vq=hd1080 + a couple harmless params.
+      if (!src.includes("vq=")){
+        f.setAttribute("src", src + joiner + "vq=hd1080&rel=0&modestbranding=1");
+      }else{
+        // also add rel/modestbranding if missing (without changing anything else)
+        let updated = src;
+        if (!updated.includes("rel=")) updated += "&rel=0";
+        if (!updated.includes("modestbranding=")) updated += "&modestbranding=1";
+        f.setAttribute("src", updated);
       }
-    }
+    }catch{}
+  });
+})();
 
-    const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-    if (md < 200) {
-      ctx.strokeStyle = `rgba(0,255,213,${1 - md / 200})`;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(mouse.x, mouse.y);
-      ctx.stroke();
-    }
+/* ===== NEW: Roblox Games + Groups (icons + links) =====
+   - Games use UniverseId for icon endpoint.
+   - Groups use GroupId for icon endpoint.
+   Replace the IDs + URLs with your real ones.
+*/
+const RBX_ITEMS = [
+  { type: "game",  name: "Game Name Here",  universeId: 0, url: "https://www.roblox.com/games/PLACE_ID_HERE" },
+  { type: "game",  name: "Game Name Here",  universeId: 0, url: "https://www.roblox.com/games/PLACE_ID_HERE" },
+  { type: "group", name: "Group Name Here", groupId: 0,    url: "https://www.roblox.com/groups/GROUP_ID_HERE" },
+  { type: "group", name: "Group Name Here", groupId: 0,    url: "https://www.roblox.com/groups/GROUP_ID_HERE" }
+];
 
-    ctx.fillStyle = "#d6d9ff";
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-    ctx.fill();
+const rbxGrid = document.getElementById("rbxGrid");
+
+function makeRbxCard(item){
+  const a = document.createElement("a");
+  a.className = "rbx-item";
+  a.href = item.url || "#";
+  a.target = "_blank";
+  a.rel = "noopener";
+
+  const thumb = document.createElement("div");
+  thumb.className = "rbx-thumb";
+
+  const img = document.createElement("img");
+  img.alt = item.name || "Roblox";
+  img.loading = "lazy";
+  img.decoding = "async";
+  thumb.appendChild(img);
+
+  const meta = document.createElement("div");
+  meta.className = "rbx-meta";
+
+  const name = document.createElement("div");
+  name.className = "rbx-name";
+  name.textContent = item.name || "Untitled";
+
+  const type = document.createElement("div");
+  type.className = "rbx-type";
+  type.textContent = item.type === "group" ? "Group" : "Game";
+
+  meta.appendChild(name);
+  meta.appendChild(type);
+
+  a.appendChild(thumb);
+  a.appendChild(meta);
+
+  // icon load (best-effort)
+  loadRobloxIcon(item).then(url => {
+    if (url) img.src = url;
+  }).catch(()=>{});
+
+  return a;
+}
+
+async function loadRobloxIcon(item){
+  if (item.type === "game" && item.universeId && item.universeId !== 0){
+    const api = "https://thumbnails.roblox.com/v1/games/icons?universeIds=" + encodeURIComponent(item.universeId) + "&size=150x150&format=Png&isCircular=false";
+    const res = await fetch(api);
+    if (!res.ok) return "";
+    const data = await res.json();
+    return data && data.data && data.data[0] && data.data[0].imageUrl ? data.data[0].imageUrl : "";
   }
 
-  requestAnimationFrame(draw);
+  if (item.type === "group" && item.groupId && item.groupId !== 0){
+    const api = "https://thumbnails.roblox.com/v1/groups/icons?groupIds=" + encodeURIComponent(item.groupId) + "&size=150x150&format=Png&isCircular=false";
+    const res = await fetch(api);
+    if (!res.ok) return "";
+    const data = await res.json();
+    return data && data.data && data.data[0] && data.data[0].imageUrl ? data.data[0].imageUrl : "";
+  }
+
+  return "";
 }
-draw();
+
+if (rbxGrid){
+  RBX_ITEMS.forEach(item => rbxGrid.appendChild(makeRbxCard(item)));
+}
+
+/* ===== BACKGROUND NETWORK (PC ONLY) ===== */
+const isMobile = window.matchMedia("(max-width: 820px)").matches;
+if (!isMobile){
+  const canvas = document.getElementById("bg");
+  const ctx = canvas.getContext("2d");
+  let w, h;
+  let mouse = { x: 0, y: 0 };
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  window.addEventListener("mousemove", e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  const nodes = [];
+  const COUNT = 120;
+
+  for (let i = 0; i < COUNT; i++) {
+    nodes.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 3 + 1,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      a.x += a.vx;
+      a.y += a.vy;
+
+      if (a.x < 0 || a.x > w) a.vx *= -1;
+      if (a.y < 0 || a.y > h) a.vy *= -1;
+
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 150) {
+          ctx.strokeStyle = `rgba(127,0,255,${1 - d / 150})`;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+
+      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (md < 200) {
+        ctx.strokeStyle = `rgba(0,255,213,${1 - md / 200})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "#d6d9ff";
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
 </script>
 
 </body>
