@@ -7,10 +7,10 @@
 
 <style>
 :root {
-  --bg: #0a0b12;
-  --panel: #121426;
-  --text: #e8e9ff;
-  --muted: #a2a6ff;
+  --bg: #070812;
+  --panel: #12142a;
+  --text: #eef0ff;
+  --muted: #a6abff;
   --pink: #ff4fd8;
   --blue: #4fd2ff;
   --purple: #7a6cff;
@@ -26,9 +26,17 @@ html {
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #13152a, #07080f 60%);
+  background: radial-gradient(circle at top, #13152a, #070812 60%);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== BACKGROUND CANVAS ===== */
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
 }
 
 /* ===== NAV ===== */
@@ -41,7 +49,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 36px;
-  background: rgba(10,11,18,0.8);
+  background: rgba(10,11,18,0.85);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(255,255,255,0.05);
   z-index: 100;
@@ -98,7 +106,7 @@ h2 {
 }
 
 p {
-  max-width: 700px;
+  max-width: 720px;
   color: var(--muted);
   font-size: 18px;
   line-height: 1.6;
@@ -113,11 +121,11 @@ p {
 
 .hero-glow {
   margin-top: 30px;
-  width: 300px;
+  width: 320px;
   height: 6px;
   background: linear-gradient(90deg, var(--pink), var(--blue));
   border-radius: 10px;
-  box-shadow: 0 0 30px var(--pink);
+  box-shadow: 0 0 40px var(--pink);
 }
 
 /* ===== CARDS ===== */
@@ -137,12 +145,8 @@ p {
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 40px rgba(124,108,255,0.35);
-}
-
-.card h3 {
-  margin-top: 0;
+  transform: translateY(-8px);
+  box-shadow: 0 0 50px rgba(124,108,255,0.35);
 }
 
 /* ===== FOOTER ===== */
@@ -155,7 +159,7 @@ footer {
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
   section {
-    padding: 120px 30px;
+    padding: 120px 28px;
   }
   h1 {
     font-size: 40px;
@@ -165,6 +169,8 @@ footer {
 </head>
 
 <body>
+
+<canvas id="bg"></canvas>
 
 <nav>
   <div class="logo">mystichromey</div>
@@ -190,8 +196,8 @@ footer {
 <section id="about">
   <h2>About</h2>
   <p>
-    Focused on gameplay systems, UI logic, matchmaking, mutations, shops,
-    and server-authoritative mechanics. I care about structure as much as results.
+    Roblox scripter focused on gameplay systems, UI logic, matchmaking,
+    server-authoritative mechanics, and performance-safe design.
   </p>
 </section>
 
@@ -204,7 +210,7 @@ footer {
     </div>
     <div class="card">
       <h3>Mutation Gameplay</h3>
-      <p>Timed effects, server authority, cleanup.</p>
+      <p>Timed effects, server control, cleanup.</p>
     </div>
     <div class="card">
       <h3>UI Systems</h3>
@@ -221,9 +227,7 @@ footer {
 <section id="code">
   <h2>Code</h2>
   <p>
-    All systems are documented and available on GitHub.
-  </p>
-  <p>
+    GitHub repository:
     <a href="https://github.com/mystichromey" target="_blank">
       github.com/mystichromey
     </a>
@@ -233,13 +237,103 @@ footer {
 <section id="contact">
   <h2>Contact</h2>
   <p>
-    Best way to reach me is through GitHub or Discord.
+    Primary contact:
+    <a href="https://discord.com/users/831900690648399930" target="_blank">
+      Discord
+    </a>
+  </p>
+  <p>
+    Roblox profile:
+    <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">
+      roblox.com/mystichromey
+    </a>
   </p>
 </section>
 
 <footer>
   © mystichromey · Roblox Developer
 </footer>
+
+<script>
+const canvas = document.getElementById("bg");
+const ctx = canvas.getContext("2d");
+
+let w, h;
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+const nodes = [];
+const NODE_COUNT = Math.floor((w * h) / 18000);
+
+for (let i = 0; i < NODE_COUNT; i++) {
+  nodes.push({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    vx: (Math.random() - 0.5) * 0.4,
+    vy: (Math.random() - 0.5) * 0.4
+  });
+}
+
+const mouse = { x: null, y: null };
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+window.addEventListener("mouseleave", () => {
+  mouse.x = mouse.y = null;
+});
+
+function tick() {
+  ctx.clearRect(0, 0, w, h);
+
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+
+    a.x += a.vx;
+    a.y += a.vy;
+
+    if (a.x < 0 || a.x > w) a.vx *= -1;
+    if (a.y < 0 || a.y > h) a.vy *= -1;
+
+    if (mouse.x !== null) {
+      const dx = a.x - mouse.x;
+      const dy = a.y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 140) {
+        a.vx += dx / dist * 0.02;
+        a.vy += dy / dist * 0.02;
+      }
+    }
+
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < 120) {
+        ctx.strokeStyle = `rgba(130,130,255,${1 - dist / 120})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = "#9aa0ff";
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 1.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  requestAnimationFrame(tick);
+}
+tick();
+</script>
 
 </body>
 </html>
