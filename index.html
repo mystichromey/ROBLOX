@@ -8,12 +8,15 @@
 <style>
 :root {
   --bg: #070812;
-  --panel: #12142a;
+  --panel: #111327;
   --text: #eef0ff;
-  --muted: #a6abff;
-  --pink: #ff4fd8;
-  --blue: #4fd2ff;
-  --purple: #7a6cff;
+  --muted: #b2b6ff;
+
+  /* Mystichrome gradient */
+  --m1: #7f00ff;
+  --m2: #00ffd5;
+  --m3: #00aaff;
+  --m4: #ff4fd8;
 }
 
 * {
@@ -26,7 +29,7 @@ html {
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #13152a, #070812 60%);
+  background: radial-gradient(circle at top, #14162e, #070812 60%);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   overflow-x: hidden;
@@ -56,9 +59,11 @@ nav {
 }
 
 nav .logo {
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 1px;
-  background: linear-gradient(90deg, var(--pink), var(--blue));
+  background: linear-gradient(90deg, var(--m1), var(--m2), var(--m3), var(--m4));
+  background-size: 300% 300%;
+  animation: mystiShift 8s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -78,7 +83,7 @@ nav .links a::after {
   bottom: -6px;
   width: 0%;
   height: 2px;
-  background: linear-gradient(90deg, var(--pink), var(--blue));
+  background: linear-gradient(90deg, var(--m1), var(--m2), var(--m4));
   transition: width 0.25s ease;
 }
 
@@ -114,18 +119,20 @@ p {
 
 /* ===== HERO ===== */
 #home h1 span {
-  background: linear-gradient(90deg, var(--purple), var(--blue), var(--pink));
+  background: linear-gradient(90deg, var(--m1), var(--m2), var(--m3), var(--m4));
+  background-size: 300% 300%;
+  animation: mystiShift 10s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero-glow {
-  margin-top: 30px;
-  width: 320px;
-  height: 6px;
-  background: linear-gradient(90deg, var(--pink), var(--blue));
-  border-radius: 10px;
-  box-shadow: 0 0 40px var(--pink);
+  margin-top: 32px;
+  width: 360px;
+  height: 8px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--m1), var(--m2), var(--m4));
+  box-shadow: 0 0 60px rgba(0,255,213,0.6);
 }
 
 /* ===== CARDS ===== */
@@ -137,16 +144,16 @@ p {
 }
 
 .card {
-  background: linear-gradient(180deg, #16183a, #0d0f24);
-  border-radius: 16px;
-  padding: 24px;
-  border: 1px solid rgba(255,255,255,0.06);
+  background: linear-gradient(180deg, #16183a, #0b0d22);
+  border-radius: 18px;
+  padding: 26px;
+  border: 1px solid rgba(255,255,255,0.07);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 50px rgba(124,108,255,0.35);
+  transform: translateY(-10px);
+  box-shadow: 0 0 60px rgba(127,0,255,0.35);
 }
 
 /* ===== FOOTER ===== */
@@ -164,6 +171,13 @@ footer {
   h1 {
     font-size: 40px;
   }
+}
+
+/* ===== ANIMS ===== */
+@keyframes mystiShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 </style>
 </head>
@@ -187,8 +201,8 @@ footer {
 <section id="home">
   <h1>Roblox <span>Systems Scripter</span></h1>
   <p>
-    I build clean, scalable Roblox systems with strong client/server separation,
-    performance awareness, and maintainable architecture.
+    I build scalable Roblox systems with clean architecture,
+    server authority, and performance-aware logic.
   </p>
   <div class="hero-glow"></div>
 </section>
@@ -196,8 +210,8 @@ footer {
 <section id="about">
   <h2>About</h2>
   <p>
-    Roblox scripter focused on gameplay systems, UI logic, matchmaking,
-    server-authoritative mechanics, and performance-safe design.
+    Focused on gameplay systems, UI logic, matchmaking,
+    and clean client/server separation.
   </p>
 </section>
 
@@ -205,29 +219,28 @@ footer {
   <h2>Work</h2>
   <div class="cards">
     <div class="card">
-      <h3>Matchmaking System</h3>
-      <p>Queue logic, teleport handoff, fail-safes.</p>
+      <h3>Matchmaking</h3>
+      <p>Queue logic, teleport flow, server safety.</p>
     </div>
     <div class="card">
-      <h3>Mutation Gameplay</h3>
-      <p>Timed effects, server control, cleanup.</p>
+      <h3>Mutations</h3>
+      <p>Timed effects, cleanup, authority.</p>
     </div>
     <div class="card">
       <h3>UI Systems</h3>
-      <p>SurfaceGui, ScreenGui, responsive layouts.</p>
+      <p>Responsive ScreenGui & SurfaceGui.</p>
     </div>
   </div>
 </section>
 
 <section id="videos">
   <h2>Videos</h2>
-  <p>Gameplay demos and system showcases coming soon.</p>
+  <p>Gameplay and system demos coming soon.</p>
 </section>
 
 <section id="code">
   <h2>Code</h2>
   <p>
-    GitHub repository:
     <a href="https://github.com/mystichromey" target="_blank">
       github.com/mystichromey
     </a>
@@ -237,15 +250,15 @@ footer {
 <section id="contact">
   <h2>Contact</h2>
   <p>
-    Primary contact:
+    Discord:
     <a href="https://discord.com/users/831900690648399930" target="_blank">
-      Discord
+      mystichromey
     </a>
   </p>
   <p>
-    Roblox profile:
+    Roblox:
     <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">
-      roblox.com/mystichromey
+      Profile
     </a>
   </p>
 </section>
@@ -267,24 +280,26 @@ window.addEventListener("resize", resize);
 resize();
 
 const nodes = [];
-const NODE_COUNT = Math.floor((w * h) / 18000);
+const NODE_COUNT = Math.floor((w * h) / 16000);
 
 for (let i = 0; i < NODE_COUNT; i++) {
   nodes.push({
     x: Math.random() * w,
     y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4
+    vx: (Math.random() - 0.5) * 0.6,
+    vy: (Math.random() - 0.5) * 0.6
   });
 }
 
-const mouse = { x: null, y: null };
+const mouse = { x: 0, y: 0, active: false };
+
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
+  mouse.active = true;
 });
 window.addEventListener("mouseleave", () => {
-  mouse.x = mouse.y = null;
+  mouse.active = false;
 });
 
 function tick() {
@@ -299,13 +314,13 @@ function tick() {
     if (a.x < 0 || a.x > w) a.vx *= -1;
     if (a.y < 0 || a.y > h) a.vy *= -1;
 
-    if (mouse.x !== null) {
+    if (mouse.active) {
       const dx = a.x - mouse.x;
       const dy = a.y - mouse.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 140) {
-        a.vx += dx / dist * 0.02;
-        a.vy += dy / dist * 0.02;
+      if (dist < 200) {
+        a.vx += dx / dist * 0.05;
+        a.vy += dy / dist * 0.05;
       }
     }
 
@@ -315,8 +330,8 @@ function tick() {
       const dy = a.y - b.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
 
-      if (dist < 120) {
-        ctx.strokeStyle = `rgba(130,130,255,${1 - dist / 120})`;
+      if (dist < 140) {
+        ctx.strokeStyle = `rgba(127,0,255,${1 - dist / 140})`;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
         ctx.lineTo(b.x, b.y);
@@ -324,10 +339,17 @@ function tick() {
       }
     }
 
-    ctx.fillStyle = "#9aa0ff";
+    ctx.fillStyle = "#c8ccff";
     ctx.beginPath();
-    ctx.arc(a.x, a.y, 1.4, 0, Math.PI * 2);
+    ctx.arc(a.x, a.y, 1.6, 0, Math.PI * 2);
     ctx.fill();
+  }
+
+  if (mouse.active) {
+    ctx.beginPath();
+    ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(0,255,213,0.15)";
+    ctx.stroke();
   }
 
   requestAnimationFrame(tick);
