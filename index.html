@@ -42,9 +42,13 @@ body {
 
 /* ===== BACKGROUND CANVAS ===== */
 #bg {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 300vh; /* makes it scroll with page */
   z-index: -1;
+  pointer-events: none; /* IMPORTANT */
 }
 
 /* ===== NAV ===== */
@@ -53,18 +57,16 @@ nav {
   top: 0;
   width: 100%;
   height: 72px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   background: rgba(10,11,18,0.9);
   backdrop-filter: blur(14px);
   z-index: 100;
 }
 
 .nav-inner {
-  width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0 32px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -81,9 +83,11 @@ nav::after {
   animation: lineMove 8s linear infinite;
 }
 
+/* ===== LOGO ===== */
 .logo {
-  font-weight: 700;
-  font-size: 20px;
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 0.5px;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size: 300% 300%;
   animation: shift 8s ease infinite;
@@ -91,19 +95,30 @@ nav::after {
   -webkit-text-fill-color: transparent;
 }
 
+/* ===== NAV BUTTONS ===== */
 .links {
   display: flex;
-  gap: 22px;
+  gap: 12px;
 }
 
 .links a {
-  font-size: 16px;
+  position: relative;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 15px;
   color: var(--muted);
   text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .links a:hover {
   color: var(--text);
+  background: linear-gradient(
+    135deg,
+    rgba(127,0,255,0.18),
+    rgba(0,255,213,0.18)
+  );
+  box-shadow: 0 0 25px rgba(0,255,213,0.35);
 }
 
 /* ===== SECTIONS ===== */
@@ -137,7 +152,6 @@ p {
   font-size: 22px;
   max-width: 760px;
   margin-top: 20px;
-  color: var(--muted);
 }
 
 .hero-glow {
@@ -168,10 +182,12 @@ p {
     rgba(0,255,213,0.25)
   );
   border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .contact-buttons a:hover {
-  box-shadow: 0 0 30px rgba(0,255,213,0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 0 30px rgba(0,255,213,0.45);
 }
 
 /* ===== MOBILE ===== */
@@ -265,7 +281,7 @@ const el = document.getElementById("typed");
   }
 })();
 
-/* ===== INTERACTIVE ROBLOX PARTICLE BACKGROUND ===== */
+/* ===== SCROLL-AWARE ROBLOX PARTICLE BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -274,25 +290,26 @@ let mouse = { x: 0, y: 0 };
 
 function resize() {
   w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
+  h = canvas.height = document.body.scrollHeight;
+  canvas.style.height = h + "px";
 }
 window.addEventListener("resize", resize);
 resize();
 
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
-  mouse.y = e.clientY;
+  mouse.y = e.clientY + window.scrollY;
 });
 
 const nodes = [];
-const COUNT = 90;
+const COUNT = 110;
 
 for (let i = 0; i < COUNT; i++) {
   nodes.push({
     x: Math.random() * w,
     y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3
+    vx: (Math.random() - 0.5) * 0.25,
+    vy: (Math.random() - 0.5) * 0.25
   });
 }
 
@@ -310,9 +327,6 @@ function draw() {
     for (let j = i + 1; j < nodes.length; j++) {
       const b = nodes[j];
       const d = Math.hypot(a.x - b.x, a.y - b.y);
-
-      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-
       if (d < 140) {
         ctx.strokeStyle = `rgba(127,0,255,${1 - d / 140})`;
         ctx.beginPath();
@@ -320,14 +334,15 @@ function draw() {
         ctx.lineTo(b.x, b.y);
         ctx.stroke();
       }
+    }
 
-      if (md < 180) {
-        ctx.strokeStyle = `rgba(0,255,213,${1 - md / 180})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(mouse.x, mouse.y);
-        ctx.stroke();
-      }
+    const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+    if (md < 160) {
+      ctx.strokeStyle = `rgba(0,255,213,${1 - md / 160})`;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(mouse.x, mouse.y);
+      ctx.stroke();
     }
 
     ctx.fillStyle = "#cfd3ff";
