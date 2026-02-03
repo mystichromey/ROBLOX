@@ -5,7 +5,7 @@
 <title>mystichromey</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Fonts (clean + modern, still fits your mystichrome vibe) -->
+<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -16,19 +16,17 @@
   --text:#eef0ff;
   --muted:#b2b6ff;
 
-  /* mystichrome-ish accents (kept from your original scheme) */
   --m1:#7f00ff;
   --m2:#00ffd5;
   --m3:#00aaff;
   --m4:#ff4fd8;
 
   --card: rgba(255,255,255,0.05);
-  --cardBorder: rgba(255,255,255,0.14);
-  --softBorder: rgba(255,255,255,0.10);
+  --border: rgba(255,255,255,0.14);
 }
 
-html{ scroll-behavior:smooth; }
 *{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
 
 body{
   margin:0;
@@ -38,7 +36,7 @@ body{
   overflow-x:hidden;
 }
 
-/* ===== BACKGROUND CANVAS (DO NOT BREAK) ===== */
+/* ===== BACKGROUND ===== */
 #bg{
   position:fixed;
   inset:0;
@@ -66,7 +64,7 @@ nav::after{
   height:2px;
   width:100%;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
-  background-size: 300% 100%;
+  background-size:300% 100%;
   animation: lineMove 8s linear infinite;
 }
 
@@ -78,350 +76,258 @@ nav::after{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:16px;
 }
 
 .logo{
-  font-family: "Space Grotesk", Inter, system-ui, sans-serif;
-  font-weight:700;
+  font-family:"Space Grotesk",sans-serif;
   font-size:22px;
-  letter-spacing:0.2px;
+  font-weight:700;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
-  background-size: 300% 300%;
+  background-size:300% 300%;
   animation: shift 8s ease infinite;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
-  user-select:none;
 }
 
-/* Nav buttons (button-feel, but serious) */
 .nav-links{
   display:flex;
   gap:10px;
-  align-items:center;
 }
 
 .nav-links a{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
   height:40px;
   padding:0 14px;
+  display:flex;
+  align-items:center;
   border-radius:12px;
-  color:var(--text);
   text-decoration:none;
+  color:var(--text);
   font-weight:700;
   font-size:14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-  white-space:nowrap;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.12);
+  transition:transform .15s ease, box-shadow .2s ease;
 }
 
 .nav-links a:hover{
-  background: linear-gradient(135deg, rgba(127,0,255,0.22), rgba(0,255,213,0.18));
-  border-color: rgba(255,255,255,0.18);
-  box-shadow: 0 0 24px rgba(0,255,213,0.18);
-  transform: translateY(-1px);
-}
-
-.nav-links a:active{
-  transform: translateY(0px);
-  box-shadow: 0 0 18px rgba(0,255,213,0.14);
+  transform:translateY(-1px);
+  box-shadow:0 0 24px rgba(0,255,213,0.18);
 }
 
 .nav-links a.primary{
-  background: linear-gradient(135deg, rgba(127,0,255,0.28), rgba(0,255,213,0.22));
-  border-color: rgba(255,255,255,0.18);
-}
-
-.menu-btn{
-  display:none;
-  height:40px;
-  padding:0 12px;
-  border-radius:12px;
-  color:var(--text);
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  font-weight:800;
-  cursor:pointer;
-}
-
-.menu-btn:hover{
-  box-shadow: 0 0 24px rgba(0,255,213,0.14);
-}
-
-/* Mobile dropdown */
-.mobile-panel{
-  display:none;
-  position:fixed;
-  top:72px;
-  left:0;
-  width:100%;
-  background: rgba(10,11,18,0.92);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
-  z-index:99;
-}
-
-.mobile-panel .inner{
-  max-width:1300px;
-  margin:0 auto;
-  padding:14px 18px 18px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-.mobile-panel a{
-  flex: 1 1 calc(50% - 10px);
+  background:linear-gradient(135deg, rgba(127,0,255,0.28), rgba(0,255,213,0.22));
 }
 
 /* ===== SECTIONS ===== */
 section{
-  min-height: 100vh;
-  padding: 140px 80px;
+  min-height:100vh;
+  padding:140px 80px;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
   text-align:center;
 }
 
 h1,h2{
-  font-family:"Space Grotesk", Inter, system-ui, sans-serif;
+  font-family:"Space Grotesk",sans-serif;
   margin:0;
 }
 
-h1{
-  font-size:56px;
-  letter-spacing:-0.6px;
-}
-
-h2{
-  font-size:38px;
-  margin-bottom:16px;
-  letter-spacing:-0.3px;
-}
+h1{ font-size:56px; }
+h2{ font-size:38px; margin-bottom:14px; }
 
 p{
-  max-width: 780px;
-  font-size: 18px;
-  line-height: 1.7;
-  color: var(--muted);
-  margin:0;
+  max-width:760px;
+  color:var(--muted);
+  font-size:18px;
+  line-height:1.7;
 }
 
-/* ===== HERO (clean, no cringe, no typing) ===== */
-.kicker{
-  margin-top:14px;
-  font-weight:600;
-  color: rgba(238,240,255,0.88);
-  font-size: 18px;
-}
-
+/* ===== HERO ===== */
 .hero-sub{
   margin-top:10px;
-  color: var(--muted);
-  font-size: 16px;
+  font-size:16px;
+  color:var(--muted);
 }
 
 .hero-actions{
+  margin-top:28px;
   display:flex;
   gap:12px;
-  margin-top:28px;
-  flex-wrap:wrap;
-  justify-content:center;
 }
 
 .btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
   height:46px;
   padding:0 18px;
   border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   text-decoration:none;
   color:var(--text);
   font-weight:800;
   font-size:14px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.14);
-  transition: transform .15s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  transition:transform .15s ease, box-shadow .2s ease;
 }
 
 .btn:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 0 34px rgba(0,255,213,0.18);
-  border-color: rgba(255,255,255,0.20);
-}
-
-.btn:active{
-  transform: translateY(-1px);
+  transform:translateY(-2px);
+  box-shadow:0 0 34px rgba(0,255,213,0.18);
 }
 
 .btn.primary{
-  background: linear-gradient(135deg, rgba(127,0,255,0.30), rgba(0,255,213,0.22));
-  border-color: rgba(255,255,255,0.20);
+  background:linear-gradient(135deg, rgba(127,0,255,0.30), rgba(0,255,213,0.22));
 }
 
-.hero-glow{
-  margin-top:34px;
-  width:360px;
-  height:6px;
+/* ===== MOST RECENT ===== */
+.recent{
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:20px;
-  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m4));
-  box-shadow: 0 0 45px rgba(0,255,213,0.45);
+  padding:24px;
+  max-width:900px;
+  margin-top:28px;
 }
 
-/* ===== CARDS ===== */
+.recent h3{
+  margin:0 0 8px;
+  font-family:"Space Grotesk",sans-serif;
+}
+
+.recent-actions{
+  margin-top:16px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
+}
+
+/* ===== SERVICES ===== */
 .grid{
   width:100%;
   max-width:1100px;
-  margin-top:28px;
+  margin-top:30px;
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:16px;
 }
 
 .card{
-  background: var(--card);
-  border: 1px solid var(--cardBorder);
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:18px;
-  padding:18px 18px 16px;
+  padding:18px;
   text-align:left;
-  transition: transform .2s ease, box-shadow .25s ease, border-color .2s ease;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
 
 .card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 0 40px rgba(0,255,213,0.14);
-  border-color: rgba(255,255,255,0.18);
+  transform:translateY(-3px);
+  box-shadow:0 0 40px rgba(0,255,213,0.14);
 }
 
 .card h3{
-  font-family:"Space Grotesk", Inter, system-ui, sans-serif;
-  margin:0 0 8px;
-  font-size:18px;
-  letter-spacing:-0.2px;
-}
-
-.card p{
-  font-size:14px;
-  line-height:1.6;
-  color: rgba(178,182,255,0.92);
-}
-
-/* ===== EXPERIENCE METRICS ===== */
-.metrics{
-  width:100%;
-  max-width:1100px;
-  margin-top:26px;
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap:16px;
-}
-
-.metric{
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius:18px;
-  padding:18px;
-}
-
-.metric .num{
-  font-family:"Space Grotesk", Inter, system-ui, sans-serif;
-  font-weight:700;
-  font-size:34px;
-  letter-spacing:-0.5px;
-  background: linear-gradient(90deg,var(--m2),var(--m1));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-.metric .label{
-  margin-top:6px;
-  font-weight:700;
-  color: rgba(238,240,255,0.92);
-}
-
-.metric .sub{
-  margin-top:6px;
-  font-size:14px;
-  color: var(--muted);
-  line-height:1.55;
+  margin:0 0 6px;
+  font-family:"Space Grotesk",sans-serif;
 }
 
 /* ===== VIDEOS ===== */
 .video-grid{
   width:100%;
   max-width:1100px;
-  margin-top:28px;
+  margin-top:30px;
   display:grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
   gap:16px;
 }
 
 .video-card{
-  background: var(--card);
-  border: 1px solid var(--cardBorder);
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:18px;
   padding:14px;
-  transition: transform .2s ease, box-shadow .25s ease;
-}
-
-.video-card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 0 40px rgba(0,255,213,0.14);
 }
 
 .video-card iframe,
 .video-card video{
   width:100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio:16/9;
   border-radius:12px;
   border:none;
 }
 
-/* ===== CONTACT ===== */
-.contact-row{
+/* ===== CONTACT UI ===== */
+.contact-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:28px;
+  max-width:520px;
+  text-align:left;
+}
+
+.status{
+  font-weight:700;
+  color:#00ffd5;
+  margin-bottom:10px;
+}
+
+.copy-box{
   display:flex;
-  gap:12px;
-  margin-top:22px;
-  flex-wrap:wrap;
-  justify-content:center;
+  align-items:center;
+  gap:10px;
+  margin:14px 0;
 }
 
-.footer-note{
-  margin-top:18px;
+.copy-box input{
+  flex:1;
+  background:#0b0c1a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:12px;
+  color:var(--text);
+  font-weight:600;
+}
+
+.copy-box button{
+  height:42px;
+  padding:0 16px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,0.06);
+  color:var(--text);
+  font-weight:700;
+  cursor:pointer;
+}
+
+.copy-box button:hover{
+  box-shadow:0 0 24px rgba(0,255,213,0.18);
+}
+
+.note{
+  margin-top:12px;
+  font-size:14px;
+  color:var(--muted);
+}
+
+/* ===== FOOTER ===== */
+footer{
+  padding:24px;
+  text-align:center;
   font-size:13px;
-  color: rgba(178,182,255,0.8);
+  color:rgba(178,182,255,0.75);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 980px){
-  section{ padding: 130px 28px; }
-  h1{ font-size:44px; }
-  .grid{ grid-template-columns: 1fr; }
-  .metrics{ grid-template-columns: 1fr; }
-  .video-grid{ grid-template-columns: 1fr; }
-
-  /* Keep logo left, buttons not off-screen */
-  .nav-links{ display:none; }
-  .menu-btn{ display:inline-flex; align-items:center; }
-  .mobile-panel{ display:block; }
-  .mobile-panel{ transform: translateY(-120%); transition: transform .18s ease; }
-  .mobile-panel.open{ transform: translateY(0); }
-}
-
+/* ===== ANIMS ===== */
 @keyframes shift{
-  0%{ background-position:0% 50%; }
-  50%{ background-position:100% 50%; }
-  100%{ background-position:0% 50%; }
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 @keyframes lineMove{
-  0%{ background-position:0% 50%; }
-  100%{ background-position:300% 50%; }
+  from{background-position:0% 50%}
+  to{background-position:300% 50%}
 }
 </style>
 </head>
@@ -433,235 +339,118 @@ p{
 <nav>
   <div class="nav-inner">
     <div class="logo">mystichromey</div>
-
-    <button class="menu-btn" id="menuBtn" aria-label="Open menu">MENU</button>
-
-    <div class="nav-links" aria-label="Navigation">
-      <a href="#home">Home</a>
-      <a href="#work">Work</a>
-      <a href="#videos">Videos</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
       <a href="#contact" class="primary">Contact</a>
     </div>
   </div>
 </nav>
 
-<!-- mobile dropdown (only shows on smaller screens) -->
-<div class="mobile-panel" id="mobilePanel">
-  <div class="inner">
-    <a class="btn" href="#home">Home</a>
-    <a class="btn" href="#about">About</a>
-    <a class="btn" href="#experience">Experience</a>
-    <a class="btn" href="#work">Work</a>
-    <a class="btn" href="#videos">Videos</a>
-    <a class="btn primary" href="#contact">Contact</a>
-    <a class="btn" href="https://github.com/mystichromey" target="_blank" rel="noopener">GitHub</a>
-  </div>
-</div>
-
 <section id="home">
   <h1>mystichromey</h1>
-  <div class="kicker">Roblox Systems • Gameplay • Infrastructure</div>
-  <div class="hero-sub">Clean, scalable code built for real player load.</div>
+  <div class="hero-sub">Roblox systems • gameplay • infrastructure</div>
 
   <div class="hero-actions">
-    <a class="btn primary" href="#work">View Work</a>
-    <a class="btn" href="https://github.com/mystichromey" target="_blank" rel="noopener">GitHub</a>
-    <a class="btn" href="#contact">Contact</a>
+    <a href="#services" class="btn">View Services</a>
+    <a href="#contact" class="btn primary">Hire Me</a>
   </div>
 
-  <div class="hero-glow"></div>
-</section>
-
-<section id="about">
-  <h2>About</h2>
-  <p>
-    I build Roblox systems that stay stable under real traffic: matchmaking, UI logic,
-    server mechanics, and gameplay systems that don’t fall apart after launch.
-  </p>
-
-  <div class="grid" style="margin-top:24px;">
-    <div class="card">
-      <h3>Systems First</h3>
-      <p>Architecture that’s easy to extend and hard to break.</p>
-    </div>
-    <div class="card">
-      <h3>Server Reliability</h3>
-      <p>Predictable behavior under load, not just in Studio testing.</p>
-    </div>
-    <div class="card">
-      <h3>Clean UI Logic</h3>
-      <p>UI that stays responsive and doesn’t desync from data/state.</p>
+  <div class="recent">
+    <h3>Most Recent</h3>
+    <p>Latest Roblox system or project goes here. Short, factual summary.</p>
+    <div class="recent-actions">
+      <a href="#services" class="btn">View Details</a>
     </div>
   </div>
 </section>
 
-<section id="experience">
-  <h2>Experience</h2>
-  <p>Proof signals, not paragraphs.</p>
-
-  <div class="metrics">
-    <div class="metric">
-      <div class="num">4+</div>
-      <div class="label">Years</div>
-      <div class="sub">Building Roblox systems and gameplay infrastructure.</div>
-    </div>
-    <div class="metric">
-      <div class="num">Systems</div>
-      <div class="label">Focus</div>
-      <div class="sub">Matchmaking, UI state, data flow, server mechanics.</div>
-    </div>
-    <div class="metric">
-      <div class="num">Clean</div>
-      <div class="label">Code</div>
-      <div class="sub">Readable, modular, scalable (built to maintain).</div>
-    </div>
-  </div>
-</section>
-
-<section id="work">
-  <h2>Work</h2>
-  <p>Replace these with your real projects as you go.</p>
+<section id="services">
+  <h2>Services</h2>
+  <p>Expandable — add as many cards or videos as you want.</p>
 
   <div class="grid">
-    <div class="card">
-      <h3>Matchmaking / Teleport Flow</h3>
-      <p>Queue logic, server state, joins/leave handling, safe match cleanup.</p>
-    </div>
-    <div class="card">
-      <h3>Gameplay Systems</h3>
-      <p>Reliable mechanics, cooldowns, status effects, server-authoritative actions.</p>
-    </div>
-    <div class="card">
-      <h3>UI + Data Sync</h3>
-      <p>UI that stays in sync with server data and doesn’t spam or lag.</p>
-    </div>
+    <div class="card"><h3>Gameplay Systems</h3><p>Server-authoritative mechanics built to scale.</p></div>
+    <div class="card"><h3>Matchmaking</h3><p>Queues, teleport flow, server state handling.</p></div>
+    <div class="card"><h3>UI Logic</h3><p>Responsive UI synced cleanly with server data.</p></div>
+    <div class="card"><h3>Custom Systems</h3><p>Purpose-built logic for your specific game.</p></div>
   </div>
-</section>
-
-<section id="videos">
-  <h2>Videos</h2>
-  <p>Drop in YouTube demos or upload MP4 files to your repo.</p>
 
   <div class="video-grid">
     <div class="video-card">
-      <!-- Replace VIDEO_ID with your YouTube id -->
       <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
     </div>
-
     <div class="video-card">
-      <!-- Upload an mp4 to the same repo and rename here -->
-      <video controls>
-        <source src="video.mp4" type="video/mp4">
-      </video>
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
     </div>
+    <!-- Add more video-card blocks freely -->
   </div>
 </section>
 
 <section id="contact">
   <h2>Contact</h2>
-  <p>Fastest way to reach me:</p>
 
-  <div class="contact-row">
-    <a class="btn primary" href="https://discord.com/users/831900690648399930" target="_blank" rel="noopener">Discord</a>
-    <a class="btn" href="https://www.roblox.com/users/2397920816/profile" target="_blank" rel="noopener">Roblox</a>
-    <a class="btn" href="https://github.com/mystichromey" target="_blank" rel="noopener">GitHub</a>
+  <div class="contact-card">
+    <div class="status">● Available — responds quickly</div>
+
+    <strong>Message me on Discord</strong>
+
+    <div class="copy-box">
+      <input id="discordName" value="YOUR_DISCORD_USERNAME" readonly />
+      <button onclick="copyDiscord()">Copy</button>
+    </div>
+
+    <div class="note">
+      Paid commissions only.<br>
+      Include project details, scope, and budget in your first message.
+    </div>
   </div>
-
-  <div class="footer-note">© <span id="year"></span> mystichromey</div>
 </section>
 
+<footer>
+  © <span id="year"></span> mystichromey
+</footer>
+
 <script>
-/* ===== NAV MOBILE TOGGLE ===== */
-const menuBtn = document.getElementById("menuBtn");
-const mobilePanel = document.getElementById("mobilePanel");
+document.getElementById("year").textContent=new Date().getFullYear();
 
-function closeMenu() {
-  mobilePanel.classList.remove("open");
+function copyDiscord(){
+  const input=document.getElementById("discordName");
+  input.select();
+  document.execCommand("copy");
 }
 
-menuBtn.addEventListener("click", () => {
-  mobilePanel.classList.toggle("open");
-});
-
-mobilePanel.addEventListener("click", (e) => {
-  if (e.target.tagName.toLowerCase() === "a") closeMenu();
-});
-
-window.addEventListener("scroll", closeMenu);
-
-/* footer year */
-document.getElementById("year").textContent = new Date().getFullYear();
-
-/* ===== INTERACTIVE NETWORK BACKGROUND (kept, mouse alignment fixed) ===== */
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
-
-let w, h;
-let mouse = { x: 0, y: 0 };
-
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-window.addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-});
-
-const nodes = [];
-const COUNT = 120;
-
-for (let i = 0; i < COUNT; i++) {
-  nodes.push({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    r: Math.random() * 3 + 1,
-    vx: (Math.random() - 0.5) * 0.4,
-    vy: (Math.random() - 0.5) * 0.4
-  });
-}
-
-function draw() {
-  ctx.clearRect(0, 0, w, h);
-
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    a.x += a.vx;
-    a.y += a.vy;
-
-    if (a.x < 0 || a.x > w) a.vx *= -1;
-    if (a.y < 0 || a.y > h) a.vy *= -1;
-
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 150) {
-        ctx.strokeStyle = `rgba(127,0,255,${1 - d / 150})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
+/* background */
+const canvas=document.getElementById("bg"),ctx=canvas.getContext("2d");
+let w,h,mouse={x:0,y:0};
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight}
+addEventListener("resize",resize);resize();
+addEventListener("mousemove",e=>{mouse.x=e.clientX;mouse.y=e.clientY});
+const nodes=[...Array(120)].map(()=>({
+  x:Math.random()*w,y:Math.random()*h,
+  r:Math.random()*3+1,
+  vx:(Math.random()-.5)*.4,vy:(Math.random()-.5)*.4
+}));
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  nodes.forEach((a,i)=>{
+    a.x+=a.vx;a.y+=a.vy;
+    if(a.x<0||a.x>w)a.vx*=-1;
+    if(a.y<0||a.y>h)a.vy*=-1;
+    nodes.slice(i+1).forEach(b=>{
+      const d=Math.hypot(a.x-b.x,a.y-b.y);
+      if(d<150){
+        ctx.strokeStyle=`rgba(127,0,255,${1-d/150})`;
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
       }
+    });
+    const md=Math.hypot(a.x-mouse.x,a.y-mouse.y);
+    if(md<200){
+      ctx.strokeStyle=`rgba(0,255,213,${1-md/200})`;
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();
     }
-
-    const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-    if (md < 200) {
-      ctx.strokeStyle = `rgba(0,255,213,${1 - md / 200})`;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(mouse.x, mouse.y);
-      ctx.stroke();
-    }
-
-    ctx.fillStyle = "#d6d9ff";
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
+    ctx.fillStyle="#d6d9ff";
+    ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,Math.PI*2);ctx.fill();
+  });
   requestAnimationFrame(draw);
 }
 draw();
