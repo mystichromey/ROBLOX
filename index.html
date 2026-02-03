@@ -11,7 +11,6 @@
   --text: #eef0ff;
   --muted: #b2b6ff;
 
-  /* Mystichrome */
   --m1: #7f00ff;
   --m2: #00ffd5;
   --m3: #00aaff;
@@ -28,9 +27,7 @@
 </svg>") 0 0, auto;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -40,15 +37,13 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND CANVAS ===== */
+/* ===== BACKGROUND ===== */
 #bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 300vh; /* makes it scroll with page */
+  inset: 0;
+  height: 300vh;
   z-index: -1;
-  pointer-events: none; /* IMPORTANT */
+  pointer-events: none;
 }
 
 /* ===== NAV ===== */
@@ -64,9 +59,9 @@ nav {
 
 .nav-inner {
   max-width: 1200px;
+  height: 100%;
   margin: 0 auto;
   padding: 0 32px;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,11 +78,9 @@ nav::after {
   animation: lineMove 8s linear infinite;
 }
 
-/* ===== LOGO ===== */
 .logo {
   font-weight: 800;
-  font-size: 24px;
-  letter-spacing: 0.5px;
+  font-size: 26px;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size: 300% 300%;
   animation: shift 8s ease infinite;
@@ -101,11 +94,15 @@ nav::after {
   gap: 12px;
 }
 
-.links a {
+.links a,
+.contact-buttons a {
   position: relative;
+  overflow: hidden;
+}
+
+.links a {
   padding: 10px 16px;
   border-radius: 12px;
-  font-size: 15px;
   color: var(--muted);
   text-decoration: none;
   transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
@@ -121,6 +118,23 @@ nav::after {
   box-shadow: 0 0 25px rgba(0,255,213,0.35);
 }
 
+/* ===== RIPPLE ===== */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255,255,255,0.35);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
 /* ===== SECTIONS ===== */
 section {
   min-height: 100vh;
@@ -128,6 +142,8 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 h1 {
@@ -150,7 +166,6 @@ p {
 /* ===== HERO ===== */
 .hero-text {
   font-size: 22px;
-  max-width: 760px;
   margin-top: 20px;
 }
 
@@ -175,19 +190,12 @@ p {
   border-radius: 14px;
   text-decoration: none;
   color: var(--text);
-  font-size: 16px;
   background: linear-gradient(
     135deg,
     rgba(127,0,255,0.25),
     rgba(0,255,213,0.25)
   );
   border: 1px solid rgba(255,255,255,0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.contact-buttons a:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 30px rgba(0,255,213,0.45);
 }
 
 /* ===== MOBILE ===== */
@@ -254,11 +262,7 @@ p {
 
 <section id="code">
   <h2>Code</h2>
-  <p>
-    <a href="https://github.com/mystichromey" target="_blank">
-      github.com/mystichromey
-    </a>
-  </p>
+  <p><a href="https://github.com/mystichromey" target="_blank">github.com/mystichromey</a></p>
 </section>
 
 <section id="contact">
@@ -270,7 +274,7 @@ p {
 </section>
 
 <script>
-/* ===== HERO TYPING ===== */
+/* ===== TYPING ===== */
 const text = "I build Roblox systems because I enjoy solving messy problems and turning them into something clean and reliable.";
 let i = 0;
 const el = document.getElementById("typed");
@@ -281,7 +285,21 @@ const el = document.getElementById("typed");
   }
 })();
 
-/* ===== SCROLL-AWARE ROBLOX PARTICLE BACKGROUND ===== */
+/* ===== RIPPLE HANDLER ===== */
+document.querySelectorAll("a").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const ripple = document.createElement("span");
+    ripple.className = "ripple";
+    const rect = btn.getBoundingClientRect();
+    ripple.style.width = ripple.style.height = Math.max(rect.width, rect.height) + "px";
+    ripple.style.left = e.clientX - rect.left - rect.width / 2 + "px";
+    ripple.style.top = e.clientY - rect.top - rect.height / 2 + "px";
+    btn.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+/* ===== DEPTH PARTICLE BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
@@ -291,7 +309,6 @@ let mouse = { x: 0, y: 0 };
 function resize() {
   w = canvas.width = window.innerWidth;
   h = canvas.height = document.body.scrollHeight;
-  canvas.style.height = h + "px";
 }
 window.addEventListener("resize", resize);
 resize();
@@ -302,54 +319,30 @@ window.addEventListener("mousemove", e => {
 });
 
 const nodes = [];
-const COUNT = 110;
-
-for (let i = 0; i < COUNT; i++) {
+for (let i = 0; i < 160; i++) {
   nodes.push({
     x: Math.random() * w,
     y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.25,
-    vy: (Math.random() - 0.5) * 0.25
+    r: Math.random() * 2.5 + 0.8,
+    s: Math.random() * 0.4 + 0.1
   });
 }
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    a.x += a.vx;
-    a.y += a.vy;
+  nodes.forEach(n => {
+    n.y -= n.s;
+    if (n.y < 0) n.y = h;
 
-    if (a.x < 0 || a.x > w) a.vx *= -1;
-    if (a.y < 0 || a.y > h) a.vy *= -1;
+    const d = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+    const glow = d < 160 ? 0.8 : 0.35;
 
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 140) {
-        ctx.strokeStyle = `rgba(127,0,255,${1 - d / 140})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-    }
-
-    const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
-    if (md < 160) {
-      ctx.strokeStyle = `rgba(0,255,213,${1 - md / 160})`;
-      ctx.beginPath();
-      ctx.moveTo(a.x, a.y);
-      ctx.lineTo(mouse.x, mouse.y);
-      ctx.stroke();
-    }
-
-    ctx.fillStyle = "#cfd3ff";
+    ctx.fillStyle = `rgba(127,0,255,${glow})`;
     ctx.beginPath();
-    ctx.arc(a.x, a.y, 1.8, 0, Math.PI * 2);
+    ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
     ctx.fill();
-  }
+  });
 
   requestAnimationFrame(draw);
 }
