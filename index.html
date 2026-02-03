@@ -8,9 +8,11 @@
 <style>
 :root {
   --bg: #070812;
+  --panel: rgba(18,20,42,0.65);
   --text: #eef0ff;
   --muted: #b2b6ff;
 
+  /* Mystichrome */
   --m1: #7f00ff;
   --m2: #00ffd5;
   --m3: #00aaff;
@@ -19,6 +21,11 @@
 
 * {
   box-sizing: border-box;
+  cursor: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
+<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='white'/>\
+<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='none' stroke='black' stroke-width='2'/>\
+</svg>") 0 0, auto;
 }
 
 html, body {
@@ -30,11 +37,12 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== INTERACTIVE BACKGROUND ===== */
+/* ===== LUA BACKGROUND ===== */
 #bg {
   position: fixed;
   inset: 0;
   z-index: -1;
+  opacity: 0.9;
 }
 
 /* ===== NAV ===== */
@@ -63,9 +71,8 @@ nav::after {
   content: "";
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
   height: 2px;
+  width: 100%;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size: 300% 100%;
   animation: lineMove 8s linear infinite;
@@ -81,33 +88,47 @@ nav::after {
   -webkit-text-fill-color: transparent;
 }
 
-.links {
-  display: flex;
-  gap: 20px;
+/* ===== NAV BUTTONS ===== */
+.links a {
+  position: relative;
+  margin-left: 18px;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 15px;
+  padding: 6px 0;
 }
 
-.links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 15px;
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg,var(--m1),var(--m2));
+  transition: width 0.25s ease;
 }
 
 .links a:hover {
   color: var(--text);
 }
 
-/* ===== PAGE WRAPPER ===== */
+.links a:hover::after {
+  width: 100%;
+}
+
+/* ===== LAYOUT ===== */
 main {
   max-width: 1100px;
   margin: 0 auto;
   padding: 120px 20px 0;
 }
 
-/* ===== SECTIONS ===== */
 section {
   padding: 120px 0;
 }
 
+/* ===== TEXT ===== */
 h1 {
   font-size: 56px;
   margin: 0;
@@ -140,7 +161,7 @@ p {
   box-shadow: 0 0 60px rgba(127,0,255,0.6);
 }
 
-/* ===== GRID ===== */
+/* ===== CARDS ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -149,18 +170,40 @@ p {
 }
 
 .card {
+  position: relative;
   padding: 22px;
   border-radius: 18px;
-  background: rgba(20,22,45,0.65);
-  backdrop-filter: blur(12px);
+  background: var(--panel);
+  backdrop-filter: blur(14px);
   border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ===== CONTACT ===== */
-.contact-buttons {
-  display: flex;
-  gap: 24px;
-  margin-top: 28px;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 40px rgba(0,255,213,0.25);
+}
+
+/* ===== CONTACT BUTTONS ===== */
+.contact-buttons a {
+  display: inline-block;
+  margin-right: 20px;
+  padding: 14px 26px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text);
+  background: linear-gradient(
+    135deg,
+    rgba(127,0,255,0.25),
+    rgba(0,255,213,0.25)
+  );
+  border: 1px solid rgba(255,255,255,0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-buttons a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 35px rgba(0,255,213,0.45);
 }
 
 /* ===== MOBILE ===== */
@@ -212,17 +255,17 @@ p {
 <section id="about">
   <h2>About</h2>
   <p>
-    I focus on Roblox systems that are clean, scalable, and actually hold up
-    under real players — not just test cases.
+    I focus on Roblox systems that are clean, scalable, and actually
+    survive real players — not just test cases.
   </p>
 </section>
 
 <section id="work">
   <h2>Work</h2>
   <div class="grid">
-    <div class="card">Coming soon</div>
-    <div class="card">Coming soon</div>
-    <div class="card">Coming soon</div>
+    <div class="card">Gameplay Systems</div>
+    <div class="card">UI Logic</div>
+    <div class="card">Server Architecture</div>
   </div>
 </section>
 
@@ -258,7 +301,6 @@ p {
 const text = "I build Roblox systems because I enjoy solving messy problems and turning them into something clean and reliable.";
 let i = 0;
 const el = document.getElementById("typed");
-
 (function type() {
   if (i < text.length) {
     el.textContent += text[i++];
@@ -266,10 +308,25 @@ const el = document.getElementById("typed");
   }
 })();
 
-/* ===== INTERACTIVE GLOW BACKGROUND ===== */
+/* ===== LUA SCROLLING BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
-let w, h, mx = 0, my = 0;
+
+let w, h, offset = 0, mx = 0;
+
+const luaLines = [
+  "local Players = game:GetService(\"Players\")",
+  "local ReplicatedStorage = game:GetService(\"ReplicatedStorage\")",
+  "for _, player in pairs(Players:GetPlayers()) do",
+  "if player.Character then",
+  "local humanoid = player.Character:FindFirstChild(\"Humanoid\")",
+  "if humanoid then humanoid.Health = humanoid.Health end",
+  "end",
+  "end",
+  "RunService.Heartbeat:Connect(function(dt)",
+  "task.wait()",
+  "end)"
+];
 
 function resize() {
   w = canvas.width = window.innerWidth;
@@ -279,24 +336,22 @@ window.addEventListener("resize", resize);
 resize();
 
 window.addEventListener("mousemove", e => {
-  mx = e.clientX;
-  my = e.clientY;
+  mx = e.clientX / w;
 });
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
+  ctx.font = "14px monospace";
 
-  const grad = ctx.createRadialGradient(
-    mx, my, 0,
-    mx, my, 500
-  );
+  offset += 0.3 + mx * 1.2;
 
-  grad.addColorStop(0, "rgba(127,0,255,0.25)");
-  grad.addColorStop(0.4, "rgba(0,255,213,0.12)");
-  grad.addColorStop(1, "rgba(0,0,0,0)");
+  for (let i = 0; i < luaLines.length * 20; i++) {
+    const line = luaLines[i % luaLines.length];
+    const y = (i * 22 - offset) % (h + 400) - 200;
 
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(127,0,255,0.25)";
+    ctx.fillText(line, 40 + Math.sin((y + offset) * 0.01) * 40, y);
+  }
 
   requestAnimationFrame(draw);
 }
