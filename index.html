@@ -8,11 +8,9 @@
 <style>
 :root {
   --bg: #070812;
-  --panel: rgba(14,16,34,0.65);
   --text: #eef0ff;
   --muted: #b2b6ff;
 
-  /* Mystichrome */
   --m1: #7f00ff;
   --m2: #00ffd5;
   --m3: #00aaff;
@@ -21,52 +19,53 @@
 
 * {
   box-sizing: border-box;
-  cursor: url("data:image/svg+xml;utf8,\
-<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
-<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='white'/>\
-<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='none' stroke='black' stroke-width='2'/>\
-</svg>") 0 0, auto;
 }
 
-html { scroll-behavior: smooth; }
-
-body {
+html, body {
   margin: 0;
+  padding: 0;
   background: var(--bg);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND ===== */
+/* ===== INTERACTIVE BACKGROUND ===== */
 #bg {
   position: fixed;
   inset: 0;
-  z-index: -2;
-  opacity: 0.55;
+  z-index: -1;
 }
 
 /* ===== NAV ===== */
 nav {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  right: 0;
   height: 72px;
-  padding: 0 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   background: rgba(10,11,18,0.85);
   backdrop-filter: blur(16px);
   z-index: 100;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 nav::after {
   content: "";
   position: absolute;
   bottom: 0;
+  left: 0;
+  right: 0;
   height: 2px;
-  width: 100%;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size: 300% 100%;
   animation: lineMove 8s linear infinite;
@@ -84,7 +83,7 @@ nav::after {
 
 .links {
   display: flex;
-  gap: 22px;
+  gap: 20px;
 }
 
 .links a {
@@ -97,27 +96,16 @@ nav::after {
   color: var(--text);
 }
 
-/* ===== SECTIONS ===== */
-section {
-  position: relative;
-  padding: 160px 24px;
-}
-
-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at top,
-    rgba(127,0,255,0.08),
-    rgba(0,0,0,0)
-  );
-  pointer-events: none;
-}
-
-.container {
+/* ===== PAGE WRAPPER ===== */
+main {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 120px 20px 0;
+}
+
+/* ===== SECTIONS ===== */
+section {
+  padding: 120px 0;
 }
 
 h1 {
@@ -149,10 +137,10 @@ p {
   height: 6px;
   border-radius: 20px;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m4));
-  box-shadow: 0 0 50px rgba(127,0,255,0.45);
+  box-shadow: 0 0 60px rgba(127,0,255,0.6);
 }
 
-/* ===== GRID / CARDS ===== */
+/* ===== GRID ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -163,15 +151,9 @@ p {
 .card {
   padding: 22px;
   border-radius: 18px;
-  background: var(--panel);
-  backdrop-filter: blur(14px);
+  background: rgba(20,22,45,0.65);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(255,255,255,0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 30px rgba(0,255,213,0.25);
 }
 
 /* ===== CONTACT ===== */
@@ -179,23 +161,6 @@ p {
   display: flex;
   gap: 24px;
   margin-top: 28px;
-}
-
-.contact-buttons a {
-  padding: 14px 26px;
-  border-radius: 14px;
-  text-decoration: none;
-  color: var(--text);
-  background: linear-gradient(
-    135deg,
-    rgba(127,0,255,0.25),
-    rgba(0,255,213,0.25)
-  );
-  border: 1px solid rgba(255,255,255,0.15);
-}
-
-.contact-buttons a:hover {
-  box-shadow: 0 0 30px rgba(0,255,213,0.35);
 }
 
 /* ===== MOBILE ===== */
@@ -223,95 +188,88 @@ p {
 <canvas id="bg"></canvas>
 
 <nav>
-  <div class="logo">mystichromey</div>
-  <div class="links">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#work">Work</a>
-    <a href="#videos">Videos</a>
-    <a href="#code">Code</a>
-    <a href="#contact">Contact</a>
+  <div class="nav-inner">
+    <div class="logo">mystichromey</div>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#videos">Videos</a>
+      <a href="#code">Code</a>
+      <a href="#contact">Contact</a>
+    </div>
   </div>
 </nav>
 
+<main>
+
 <section id="home">
-  <div class="container">
-    <h1>I make things work.</h1>
-    <p class="hero-text" id="typed"></p>
-    <div class="hero-glow"></div>
-  </div>
+  <h1>I make things work.</h1>
+  <p class="hero-text" id="typed"></p>
+  <div class="hero-glow"></div>
 </section>
 
 <section id="about">
-  <div class="container">
-    <h2>About</h2>
-    <p>
-      I focus on Roblox systems that are clean, scalable, and actually hold up
-      under real players — not just test cases.
-    </p>
-  </div>
+  <h2>About</h2>
+  <p>
+    I focus on Roblox systems that are clean, scalable, and actually hold up
+    under real players — not just test cases.
+  </p>
 </section>
 
 <section id="work">
-  <div class="container">
-    <h2>Work</h2>
-    <div class="grid">
-      <div class="card">Coming soon</div>
-      <div class="card">Coming soon</div>
-      <div class="card">Coming soon</div>
-    </div>
+  <h2>Work</h2>
+  <div class="grid">
+    <div class="card">Coming soon</div>
+    <div class="card">Coming soon</div>
+    <div class="card">Coming soon</div>
   </div>
 </section>
 
 <section id="videos">
-  <div class="container">
-    <h2>Videos</h2>
-    <div class="grid">
-      <div class="card">System demos coming soon</div>
-      <div class="card">Gameplay showcases coming soon</div>
-    </div>
+  <h2>Videos</h2>
+  <div class="grid">
+    <div class="card">System demos coming soon</div>
+    <div class="card">Gameplay showcases coming soon</div>
   </div>
 </section>
 
 <section id="code">
-  <div class="container">
-    <h2>Code</h2>
-    <p>
-      <a href="https://github.com/mystichromey" target="_blank">
-        github.com/mystichromey
-      </a>
-    </p>
-  </div>
+  <h2>Code</h2>
+  <p>
+    <a href="https://github.com/mystichromey" target="_blank">
+      github.com/mystichromey
+    </a>
+  </p>
 </section>
 
 <section id="contact">
-  <div class="container">
-    <h2>Contact</h2>
-    <div class="contact-buttons">
-      <a href="https://discord.com/users/831900690648399930" target="_blank">Discord</a>
-      <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">Roblox</a>
-    </div>
+  <h2>Contact</h2>
+  <div class="contact-buttons">
+    <a href="https://discord.com/users/831900690648399930" target="_blank">Discord</a>
+    <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">Roblox</a>
   </div>
 </section>
 
+</main>
+
 <script>
-/* ===== HERO TYPING ===== */
+/* ===== TYPING ===== */
 const text = "I build Roblox systems because I enjoy solving messy problems and turning them into something clean and reliable.";
 let i = 0;
 const el = document.getElementById("typed");
 
-function type() {
+(function type() {
   if (i < text.length) {
     el.textContent += text[i++];
     setTimeout(type, 22);
   }
-}
-type();
+})();
 
-/* ===== NETWORK BACKGROUND ===== */
+/* ===== INTERACTIVE GLOW BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
-let w, h;
+let w, h, mx = 0, my = 0;
 
 function resize() {
   w = canvas.width = window.innerWidth;
@@ -320,44 +278,25 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-const nodes = [];
-for (let i = 0; i < 80; i++) {
-  nodes.push({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.25,
-    vy: (Math.random() - 0.5) * 0.25
-  });
-}
+window.addEventListener("mousemove", e => {
+  mx = e.clientX;
+  my = e.clientY;
+});
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-    a.x += a.vx;
-    a.y += a.vy;
+  const grad = ctx.createRadialGradient(
+    mx, my, 0,
+    mx, my, 500
+  );
 
-    if (a.x < 0 || a.x > w) a.vx *= -1;
-    if (a.y < 0 || a.y > h) a.vy *= -1;
+  grad.addColorStop(0, "rgba(127,0,255,0.25)");
+  grad.addColorStop(0.4, "rgba(0,255,213,0.12)");
+  grad.addColorStop(1, "rgba(0,0,0,0)");
 
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const d = Math.hypot(a.x - b.x, a.y - b.y);
-      if (d < 140) {
-        ctx.strokeStyle = `rgba(127,0,255,${(1 - d / 140) * 0.35})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-    }
-
-    ctx.fillStyle = "#cfd3ff";
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, 1.6, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
 
   requestAnimationFrame(draw);
 }
