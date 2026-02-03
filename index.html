@@ -18,18 +18,29 @@
   --m4: #ff4fd8;
 }
 
-* { box-sizing: border-box; }
+/* Roblox cursor */
+* {
+  box-sizing: border-box;
+  cursor: url("data:image/svg+xml;utf8,\
+<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
+<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='white'/>\
+<polygon points='2,1 2,28 9,21 13,31 17,29 12,20 22,20' fill='none' stroke='black' stroke-width='2'/>\
+</svg>") 0 0, auto;
+}
 
-html, body {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   margin: 0;
-  padding: 0;
-  background: var(--bg);
+  background: radial-gradient(circle at top, #14162e, #070812 65%);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* ===== SUBTLE ROBLOX BACKGROUND ===== */
+/* ===== BACKGROUND CANVAS ===== */
 #bg {
   position: fixed;
   inset: 0;
@@ -42,20 +53,32 @@ nav {
   top: 0;
   width: 100%;
   height: 72px;
-  background: rgba(10,11,18,0.85);
-  backdrop-filter: blur(14px);
   display: flex;
+  align-items: center;
   justify-content: center;
-  z-index: 10;
+  background: rgba(10,11,18,0.9);
+  backdrop-filter: blur(14px);
+  z-index: 100;
 }
 
 .nav-inner {
-  max-width: 1100px;
   width: 100%;
+  max-width: 1100px;
+  padding: 0 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 28px;
+  justify-content: space-between;
+}
+
+nav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
+  background-size: 300% 100%;
+  animation: lineMove 8s linear infinite;
 }
 
 .logo {
@@ -68,26 +91,28 @@ nav {
   -webkit-text-fill-color: transparent;
 }
 
+.links {
+  display: flex;
+  gap: 22px;
+}
+
 .links a {
+  font-size: 16px;
   color: var(--muted);
   text-decoration: none;
-  font-size: 15px;
-  padding: 6px 4px;
 }
 
 .links a:hover {
   color: var(--text);
 }
 
-/* ===== PAGE ===== */
-main {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 120px 20px;
-}
-
+/* ===== SECTIONS ===== */
 section {
-  padding: 120px 0;
+  min-height: 100vh;
+  padding: 140px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h1 {
@@ -97,36 +122,74 @@ h1 {
 
 h2 {
   font-size: 38px;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 p {
   max-width: 720px;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.6;
   color: var(--muted);
 }
 
 /* ===== HERO ===== */
 .hero-text {
-  margin-top: 18px;
   font-size: 22px;
+  max-width: 760px;
+  margin-top: 20px;
+  color: var(--muted);
 }
 
 .hero-glow {
-  margin-top: 28px;
-  width: 320px;
+  margin-top: 30px;
+  width: 340px;
   height: 6px;
   border-radius: 20px;
   background: linear-gradient(90deg,var(--m1),var(--m2),var(--m4));
-  box-shadow: 0 0 45px rgba(127,0,255,0.45);
+  box-shadow: 0 0 45px rgba(0,255,213,0.45);
 }
 
-/* ===== ANIM ===== */
+/* ===== CONTACT ===== */
+.contact-buttons {
+  display: flex;
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.contact-buttons a {
+  padding: 14px 26px;
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(127,0,255,0.25),
+    rgba(0,255,213,0.25)
+  );
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.contact-buttons a:hover {
+  box-shadow: 0 0 30px rgba(0,255,213,0.35);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px) {
+  section { padding: 140px 28px; }
+  h1 { font-size: 42px; }
+}
+
+/* ===== ANIMS ===== */
 @keyframes shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@keyframes lineMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
 }
 </style>
 </head>
@@ -149,40 +212,65 @@ p {
   </div>
 </nav>
 
-<main>
-
 <section id="home">
   <h1>I make things work.</h1>
-  <p class="hero-text">
-    I build Roblox systems because I enjoy solving messy problems and
-    turning them into something clean and reliable.
-  </p>
+  <p class="hero-text" id="typed"></p>
   <div class="hero-glow"></div>
 </section>
 
 <section id="about">
   <h2>About</h2>
   <p>
-    I focus on Roblox systems that are clean, scalable, and survive real
-    players — not just test cases.
+    I focus on Roblox systems that are clean, scalable, and actually hold up
+    under real players — not just test cases.
   </p>
 </section>
 
-</main>
+<section id="work">
+  <h2>Work</h2>
+  <p>Gameplay systems, UI logic, matchmaking, and server-side mechanics.</p>
+</section>
+
+<section id="videos">
+  <h2>Videos</h2>
+  <p>System demos and gameplay showcases coming soon.</p>
+</section>
+
+<section id="code">
+  <h2>Code</h2>
+  <p>
+    <a href="https://github.com/mystichromey" target="_blank">
+      github.com/mystichromey
+    </a>
+  </p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="contact-buttons">
+    <a href="https://discord.com/users/831900690648399930" target="_blank">Discord</a>
+    <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">Roblox</a>
+  </div>
+</section>
 
 <script>
-/* ===== SUBTLE ROBLOX DATA GRID ===== */
+/* ===== HERO TYPING ===== */
+const text = "I build Roblox systems because I enjoy solving messy problems and turning them into something clean and reliable.";
+let i = 0;
+const el = document.getElementById("typed");
+(function type() {
+  if (i < text.length) {
+    el.textContent += text[i++];
+    setTimeout(type, 22);
+  }
+})();
+
+/* ===== INTERACTIVE ROBLOX PARTICLE BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
-let w, h, t = 0;
-let mx = 0.5, my = 0.5;
-
-const tokens = [
-  "Players", "RunService", "ReplicatedStorage",
-  ":Connect", "task.wait", "Heartbeat",
-  "{}", "()", "[]", "local", "function"
-];
+let w, h;
+let mouse = { x: 0, y: 0 };
 
 function resize() {
   w = canvas.width = window.innerWidth;
@@ -192,42 +280,61 @@ window.addEventListener("resize", resize);
 resize();
 
 window.addEventListener("mousemove", e => {
-  mx = e.clientX / w;
-  my = e.clientY / h;
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
+
+const nodes = [];
+const COUNT = 90;
+
+for (let i = 0; i < COUNT; i++) {
+  nodes.push({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    vx: (Math.random() - 0.5) * 0.3,
+    vy: (Math.random() - 0.5) * 0.3
+  });
+}
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
-  const spacing = 120;
-  t += 0.15;
+  for (let i = 0; i < nodes.length; i++) {
+    const a = nodes[i];
+    a.x += a.vx;
+    a.y += a.vy;
 
-  for (let y = -spacing; y < h + spacing; y += spacing) {
-    for (let x = -spacing; x < w + spacing; x += spacing) {
-      const ox = Math.sin((y + t) * 0.01) * 12;
-      const oy = (t * 0.3) % spacing;
+    if (a.x < 0 || a.x > w) a.vx *= -1;
+    if (a.y < 0 || a.y > h) a.vy *= -1;
 
-      const dx = x + ox + (mx - 0.5) * 40;
-      const dy = y + oy;
+    for (let j = i + 1; j < nodes.length; j++) {
+      const b = nodes[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
 
-      const token = tokens[(x + y) % tokens.length];
+      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
 
-      ctx.fillStyle = "rgba(127,0,255,0.08)";
-      ctx.font = "13px monospace";
-      ctx.fillText(token, dx, dy);
+      if (d < 140) {
+        ctx.strokeStyle = `rgba(127,0,255,${1 - d / 140})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+
+      if (md < 180) {
+        ctx.strokeStyle = `rgba(0,255,213,${1 - md / 180})`;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+      }
     }
+
+    ctx.fillStyle = "#cfd3ff";
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 1.8, 0, Math.PI * 2);
+    ctx.fill();
   }
-
-  // soft mystichrome glow following mouse
-  const gx = mx * w;
-  const gy = my * h;
-  const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, 500);
-  grad.addColorStop(0, "rgba(0,255,213,0.12)");
-  grad.addColorStop(0.5, "rgba(127,0,255,0.08)");
-  grad.addColorStop(1, "rgba(0,0,0,0)");
-
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, h);
 
   requestAnimationFrame(draw);
 }
