@@ -760,6 +760,9 @@ function makeRbxCard(item){
 }
 
 async function loadRobloxIcon(item){
+
+  if (item.icon) return item.icon;
+
   if (item.type === "game" && item.universeId && item.universeId !== 0){
     const api = "https://thumbnails.roblox.com/v1/games/icons?universeIds=" + encodeURIComponent(item.universeId) + "&size=150x150&format=Png&isCircular=false";
     const res = await fetch(api);
