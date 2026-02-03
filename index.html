@@ -8,7 +8,6 @@
 <style>
 :root {
   --bg: #070812;
-  --panel: #111327;
   --text: #eef0ff;
   --muted: #b2b6ff;
 
@@ -32,7 +31,7 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top, #14162e, #070812 60%);
+  background: radial-gradient(circle at top, #14162e, #070812 65%);
   color: var(--text);
   font-family: Inter, system-ui, sans-serif;
   overflow-x: hidden;
@@ -50,14 +49,15 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 68px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 28px;
+  padding: 0 32px;
   background: rgba(10,11,18,0.9);
   backdrop-filter: blur(14px);
   z-index: 100;
+  box-sizing: border-box;
 }
 
 /* animated mystichrome divider */
@@ -66,7 +66,7 @@ nav::after {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 2px;
+  height: 3px;
   width: 100%;
   background: linear-gradient(
     90deg,
@@ -77,56 +77,60 @@ nav::after {
     var(--m1)
   );
   background-size: 300% 100%;
-  animation: mystiLine 8s linear infinite;
+  animation: mystiLine 10s linear infinite;
 }
 
 .logo {
-  font-weight: 800;
-  letter-spacing: 1px;
+  font-weight: 900;
+  font-size: 26px;
+  letter-spacing: 1.2px;
   background: linear-gradient(90deg, var(--m1), var(--m2), var(--m3), var(--m4));
   background-size: 300% 300%;
   animation: shift 8s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  white-space: nowrap;
 }
 
 .links {
   display: flex;
-  gap: 10px;
+  gap: 18px;
 }
 
 .links a {
-  padding: 6px 10px;
-  font-size: 13px;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--muted);
   text-decoration: none;
-  border-radius: 8px;
+  padding: 6px 4px;
 }
 
 .links a:hover {
-  background: linear-gradient(
-    90deg,
-    rgba(127,0,255,0.25),
-    rgba(0,255,213,0.25)
-  );
   color: var(--text);
 }
 
 /* ===== SECTIONS ===== */
 section {
   min-height: 100vh;
-  padding: 120px 80px;
+  padding: 140px 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-h1 { font-size: 54px; margin: 0; }
-h2 { font-size: 34px; margin-bottom: 20px; }
+h1 {
+  font-size: 60px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 38px;
+  margin-bottom: 20px;
+}
 
 p {
   max-width: 720px;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.6;
   color: var(--muted);
 }
@@ -141,54 +145,30 @@ p {
 }
 
 .hero-glow {
-  margin-top: 26px;
-  width: 320px;
+  margin-top: 28px;
+  width: 360px;
   height: 6px;
   border-radius: 20px;
   background: linear-gradient(90deg, var(--m1), var(--m2), var(--m4));
-  box-shadow: 0 0 40px rgba(0,255,213,0.45);
-}
-
-/* ===== CARDS ===== */
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 26px;
-  margin-top: 40px;
-}
-
-.card {
-  background: linear-gradient(180deg, #16183a, #0b0d22);
-  border-radius: 18px;
-  padding: 26px;
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 40px rgba(127,0,255,0.3);
+  box-shadow: 0 0 45px rgba(0,255,213,0.45);
 }
 
 /* ===== CONTACT ===== */
-.contact-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+.contact-links {
+  display: flex;
+  gap: 30px;
   margin-top: 40px;
 }
 
-.contact {
-  padding: 26px;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #14163a, #0a0c22);
-  text-decoration: none;
+.contact-links a {
+  font-size: 18px;
+  font-weight: 500;
   color: var(--text);
-  border: 1px solid rgba(255,255,255,0.08);
+  text-decoration: none;
 }
 
-.contact:hover {
-  box-shadow: 0 0 40px rgba(0,255,213,0.35);
+.contact-links a:hover {
+  text-decoration: underline;
 }
 
 /* ===== FOOTER ===== */
@@ -200,8 +180,11 @@ footer {
 
 /* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  section { padding: 120px 28px; }
-  h1 { font-size: 40px; }
+  section { padding: 140px 28px; }
+  h1 { font-size: 42px; }
+  .logo { font-size: 22px; }
+  .links a { font-size: 14px; }
+  .links { gap: 12px; }
 }
 
 /* ===== ANIMS ===== */
@@ -247,35 +230,35 @@ footer {
 
 <section id="work">
   <h2>Work</h2>
-  <div class="cards">
-    <div class="card"><h3>Matchmaking</h3><p>Queue logic, teleport flow.</p></div>
-    <div class="card"><h3>Mutations</h3><p>Timed effects, cleanup.</p></div>
-    <div class="card"><h3>UI Systems</h3><p>ScreenGui & SurfaceGui logic.</p></div>
-  </div>
+  <p>Selected systems and gameplay features will be showcased here.</p>
 </section>
 
 <section id="videos">
   <h2>Videos</h2>
-  <p data-type="Gameplay and system demos coming soon."></p>
+  <p>Gameplay and system demos coming soon.</p>
 </section>
 
 <section id="code">
   <h2>Code</h2>
-  <p><a href="https://github.com/mystichromey" target="_blank">github.com/mystichromey</a></p>
+  <p>
+    <a href="https://github.com/mystichromey" target="_blank">
+      github.com/mystichromey
+    </a>
+  </p>
 </section>
 
 <section id="contact">
   <h2>Contact</h2>
-  <div class="contact-cards">
-    <a class="contact" href="https://discord.com/users/831900690648399930" target="_blank">Discord</a>
-    <a class="contact" href="https://www.roblox.com/users/2397920816/profile" target="_blank">Roblox Profile</a>
+  <div class="contact-links">
+    <a href="https://discord.com/users/831900690648399930" target="_blank">Discord</a>
+    <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">Roblox Profile</a>
   </div>
 </section>
 
 <footer>© mystichromey · Roblox Developer</footer>
 
 <script>
-/* ===== ROBLOXY GRID BACKGROUND ===== */
+/* ===== ROBLOXY AMBIENT BACKGROUND ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 let w, h;
@@ -287,55 +270,49 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
-const GRID = 60;
-const points = [];
+const dots = [];
+const COUNT = 120;
 
-for (let x = 0; x < w; x += GRID) {
-  for (let y = 0; y < h; y += GRID) {
-    points.push({
-      x,
-      y,
-      ox: x,
-      oy: y,
-      vx: 0,
-      vy: 0
-    });
-  }
+for (let i = 0; i < COUNT; i++) {
+  dots.push({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    r: Math.random() * 1.5 + 0.5,
+    vx: (Math.random() - 0.5) * 0.15,
+    vy: (Math.random() - 0.5) * 0.15
+  });
 }
 
-let mouse = { x: 0, y: 0, active: false };
+let mouse = { x: 0, y: 0 };
+
 window.addEventListener("mousemove", e => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
-  mouse.active = true;
 });
-window.addEventListener("mouseleave", () => mouse.active = false);
 
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
-  points.forEach(p => {
-    if (mouse.active) {
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
-      const d = Math.hypot(dx, dy);
-      if (d < 120) {
-        p.vx += dx / d * 0.15;
-        p.vy += dy / d * 0.15;
-      }
-    }
+  dots.forEach(d => {
+    d.x += d.vx;
+    d.y += d.vy;
 
-    p.vx += (p.ox - p.x) * 0.02;
-    p.vy += (p.oy - p.y) * 0.02;
+    if (d.x < 0) d.x = w;
+    if (d.x > w) d.x = 0;
+    if (d.y < 0) d.y = h;
+    if (d.y > h) d.y = 0;
 
-    p.vx *= 0.85;
-    p.vy *= 0.85;
+    const dx = d.x - mouse.x;
+    const dy = d.y - mouse.y;
+    const dist = Math.hypot(dx, dy);
 
-    p.x += p.vx;
-    p.y += p.vy;
+    let alpha = 0.4;
+    if (dist < 150) alpha = 0.8;
 
-    ctx.fillStyle = "rgba(160,170,255,0.6)";
-    ctx.fillRect(p.x - 1, p.y - 1, 2, 2);
+    ctx.fillStyle = `rgba(170,180,255,${alpha})`;
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    ctx.fill();
   });
 
   requestAnimationFrame(draw);
