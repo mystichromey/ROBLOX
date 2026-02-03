@@ -509,7 +509,7 @@ footer{
 
     <div class="copy-row">
       <div class="copy-box">
-        <input id="discordLink" value="Discord add link (click copy)" readonly>
+        <input id="discordLink" value="slexist" readonly>
       </div>
       <button class="btn primary" id="copyDiscordBtn" type="button">Copy Add Link</button>
       <button class="btn" id="openDiscordBtn" type="button">Open Discord</button>
@@ -530,6 +530,7 @@ footer{
 /* ===== LINKS (kept out of visible text) ===== */
 const DISCORD_PROFILE_URL = "https://discord.com/users/831900690648399930";
 const ROBLOX_PROFILE_URL  = "https://www.roblox.com/users/2397920816/profile";
+const DISCORD_USERNAME = "slexist";
 
 /* Footer year */
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -541,7 +542,7 @@ document.getElementById("robloxBtn").addEventListener("click", () => {
 
 /* Contact: set + copy Discord link */
 const discordInput = document.getElementById("discordLink");
-discordInput.value = DISCORD_PROFILE_URL;
+discordInput.value = DISCORD_USERNAME;
 
 document.getElementById("openDiscordBtn").addEventListener("click", () => {
   window.open(DISCORD_PROFILE_URL, "_blank", "noopener");
