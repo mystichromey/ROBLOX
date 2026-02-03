@@ -710,10 +710,10 @@ document.getElementById("copyDiscordBtn").addEventListener("click", async () => 
    Replace the IDs + URLs with your real ones.
 */
 const RBX_ITEMS = [
-  { type: "game",  name: "Youtuber Tycoon!", icon: "https://tr.rbxcdn.com/180DAY-344fd3421b9746318c4338832e5230df/512/512/Image/Webp/noFilter", universeId: 7971857341, url: "https://www.roblox.com/games/7971857341/Youtuber-Tycoon" },
-  { type: "game",  name: "FREE FIRE🏆 Ilha de treinamento",  universeId: 134697928735986, url: "https://www.roblox.com/games/134697928735986/FREE-FIRE-Ilha-de-treinamento" },
-  { type: "group", name: "Shiny Pixels", groupId: 9152522,    url: "https://www.roblox.com/groups/9152522/Shiny-Pixels#!/about" },
-  { type: "group", name: "Astrion Enterprises", groupId: 35616946,    url: "https://www.roblox.com/groups/35616946/Astrion-Enterprises#!/about" }
+  { type: "game",  name: "Youtuber Tycoon!", icon: "https://tr.rbxcdn.com/180DAY-344fd3421b9746318c4338832e5230df/512/512/Image/Webp/noFilter", label: "2021-Present, ≈ 750,000,000 Visits", universeId: 7971857341, url: "https://www.roblox.com/games/7971857341/Youtuber-Tycoon" },
+  { type: "game",  name: "FREE FIRE🏆 Ilha de treinamento",  universeId: 134697928735986, label: "Present, ≈ 14,000,000 Visits", icon: "https://tr.rbxcdn.com/180DAY-f05036e665094c48e221928eab1526fe/256/256/Image/Webp/noFilter", url: "https://www.roblox.com/games/134697928735986/FREE-FIRE-Ilha-de-treinamento" },
+  { type: "group", name: "Shiny Pixels", groupId: 9152522, label: "2021-Present, ≈ 4,000,000 Group Members", icon: "https://tr.rbxcdn.com/180DAY-dd07dd8c82407cd997370244c3969f2a/150/150/Image/Webp/noFilter",  url: "https://www.roblox.com/groups/9152522/Shiny-Pixels#!/about" },
+  { type: "group", name: "Astrion Enterprises", groupId: 35616946, label: "Present, ≈ 85,000 Group Members", icon: "https://tr.rbxcdn.com/180DAY-0ebd074bc3bd227e0401ec8e1a47de57/150/150/Image/Webp/noFilter",  url: "https://www.roblox.com/groups/35616946/Astrion-Enterprises#!/about" }
 ];
 
 const rbxGrid = document.getElementById("rbxGrid");
@@ -743,7 +743,7 @@ function makeRbxCard(item){
 
   const type = document.createElement("div");
   type.className = "rbx-type";
-  type.textContent = item.type === "group" ? "Group" : "Game";
+  type.textContent = item.label || (item.type === "group" ? "Group" : "Game");
 
   meta.appendChild(name);
   meta.appendChild(type);
