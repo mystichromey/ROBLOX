@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <title>mystichromey</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -32,7 +31,7 @@ body{
   margin:0;
   background: radial-gradient(circle at top, #14162e, #070812 65%);
   color:var(--text);
-  font-family: Inter, system-ui, sans-serif;
+  font-family:Inter,system-ui,sans-serif;
   overflow-x:hidden;
 }
 
@@ -52,8 +51,8 @@ nav{
   top:0;
   width:100%;
   height:72px;
-  background: rgba(10,11,18,0.92);
-  backdrop-filter: blur(14px);
+  background:rgba(10,11,18,0.92);
+  backdrop-filter:blur(14px);
   z-index:100;
 }
 
@@ -63,9 +62,9 @@ nav::after{
   bottom:0;
   height:2px;
   width:100%;
-  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
+  background:linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size:300% 100%;
-  animation: lineMove 8s linear infinite;
+  animation:lineMove 8s linear infinite;
 }
 
 .nav-inner{
@@ -82,9 +81,9 @@ nav::after{
   font-family:"Space Grotesk",sans-serif;
   font-size:22px;
   font-weight:700;
-  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
+  background:linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
   background-size:300% 300%;
-  animation: shift 8s ease infinite;
+  animation:shift 8s ease infinite;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -120,7 +119,6 @@ nav::after{
 
 /* ===== SECTIONS ===== */
 section{
-  min-height:100vh;
   padding:140px 80px;
   display:flex;
   flex-direction:column;
@@ -133,8 +131,8 @@ h1,h2{
   margin:0;
 }
 
-h1{ font-size:56px; }
-h2{ font-size:38px; margin-bottom:14px; }
+h1{ font-size:52px; }
+h2{ font-size:36px; margin-bottom:14px; }
 
 p{
   max-width:760px;
@@ -181,33 +179,11 @@ p{
   background:linear-gradient(135deg, rgba(127,0,255,0.30), rgba(0,255,213,0.22));
 }
 
-/* ===== MOST RECENT ===== */
-.recent{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:24px;
-  max-width:900px;
-  margin-top:28px;
-}
-
-.recent h3{
-  margin:0 0 8px;
-  font-family:"Space Grotesk",sans-serif;
-}
-
-.recent-actions{
-  margin-top:16px;
-  display:flex;
-  gap:12px;
-  justify-content:center;
-}
-
 /* ===== SERVICES ===== */
 .grid{
   width:100%;
   max-width:1100px;
-  margin-top:30px;
+  margin-top:28px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:16px;
@@ -232,11 +208,32 @@ p{
   font-family:"Space Grotesk",sans-serif;
 }
 
-/* ===== VIDEOS ===== */
+/* ===== PORTFOLIO ===== */
+.portfolio-highlight{
+  width:100%;
+  max-width:1100px;
+  background:linear-gradient(135deg, rgba(127,0,255,0.18), rgba(0,255,213,0.14));
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:26px;
+  text-align:left;
+}
+
+.badge{
+  display:inline-block;
+  margin-bottom:8px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  background:linear-gradient(90deg,var(--m2),var(--m1));
+  color:#000;
+}
+
 .video-grid{
   width:100%;
   max-width:1100px;
-  margin-top:30px;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
   gap:16px;
@@ -249,15 +246,14 @@ p{
   padding:14px;
 }
 
-.video-card iframe,
-.video-card video{
+.video-card iframe{
   width:100%;
   aspect-ratio:16/9;
   border-radius:12px;
   border:none;
 }
 
-/* ===== CONTACT UI ===== */
+/* ===== CONTACT ===== */
 .contact-card{
   background:var(--card);
   border:1px solid var(--border);
@@ -273,38 +269,6 @@ p{
   margin-bottom:10px;
 }
 
-.copy-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin:14px 0;
-}
-
-.copy-box input{
-  flex:1;
-  background:#0b0c1a;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  color:var(--text);
-  font-weight:600;
-}
-
-.copy-box button{
-  height:42px;
-  padding:0 16px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,0.06);
-  color:var(--text);
-  font-weight:700;
-  cursor:pointer;
-}
-
-.copy-box button:hover{
-  box-shadow:0 0 24px rgba(0,255,213,0.18);
-}
-
 .note{
   margin-top:12px;
   font-size:14px;
@@ -313,10 +277,10 @@ p{
 
 /* ===== FOOTER ===== */
 footer{
-  padding:24px;
+  padding:20px;
   text-align:center;
   font-size:13px;
-  color:rgba(178,182,255,0.75);
+  color:rgba(178,182,255,0.7);
 }
 
 /* ===== ANIMS ===== */
@@ -341,6 +305,7 @@ footer{
     <div class="logo">mystichromey</div>
     <div class="nav-links">
       <a href="#services">Services</a>
+      <a href="#portfolio">Portfolio</a>
       <a href="#contact" class="primary">Contact</a>
     </div>
   </div>
@@ -351,38 +316,41 @@ footer{
   <div class="hero-sub">Roblox systems • gameplay • infrastructure</div>
 
   <div class="hero-actions">
-    <a href="#services" class="btn">View Services</a>
+    <a href="#services" class="btn">Services</a>
+    <a href="#portfolio" class="btn">Portfolio</a>
     <a href="#contact" class="btn primary">Hire Me</a>
-  </div>
-
-  <div class="recent">
-    <h3>Most Recent</h3>
-    <p>Latest Roblox system or project goes here. Short, factual summary.</p>
-    <div class="recent-actions">
-      <a href="#services" class="btn">View Details</a>
-    </div>
   </div>
 </section>
 
 <section id="services">
   <h2>Services</h2>
-  <p>Expandable — add as many cards or videos as you want.</p>
+  <p>Specialized Roblox development focused on reliability and scale.</p>
 
   <div class="grid">
-    <div class="card"><h3>Gameplay Systems</h3><p>Server-authoritative mechanics built to scale.</p></div>
-    <div class="card"><h3>Matchmaking</h3><p>Queues, teleport flow, server state handling.</p></div>
-    <div class="card"><h3>UI Logic</h3><p>Responsive UI synced cleanly with server data.</p></div>
-    <div class="card"><h3>Custom Systems</h3><p>Purpose-built logic for your specific game.</p></div>
+    <div class="card"><h3>Gameplay Systems</h3><p>Server-authoritative mechanics.</p></div>
+    <div class="card"><h3>Matchmaking</h3><p>Queues, teleports, server flow.</p></div>
+    <div class="card"><h3>UI Logic</h3><p>State-safe, responsive UI.</p></div>
+    <div class="card"><h3>Data Systems</h3><p>Reliable saving and syncing.</p></div>
+    <div class="card"><h3>Optimization</h3><p>Performance under load.</p></div>
+    <div class="card"><h3>Custom Systems</h3><p>Purpose-built solutions.</p></div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <h2>Portfolio</h2>
+  <p>Recent systems and demos.</p>
+
+  <div class="portfolio-highlight">
+    <div class="badge">MOST RECENT</div>
+    <h3>Latest Roblox System</h3>
+    <p>Short, clear description of your most recent or best project.</p>
   </div>
 
   <div class="video-grid">
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-    </div>
-    <div class="video-card">
-      <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-    </div>
-    <!-- Add more video-card blocks freely -->
+    <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
+    <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
+    <div class="video-card"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
+    <!-- add more video-card blocks freely -->
   </div>
 </section>
 
@@ -391,17 +359,14 @@ footer{
 
   <div class="contact-card">
     <div class="status">● Available — responds quickly</div>
-
     <strong>Message me on Discord</strong>
-
-    <div class="copy-box">
-      <input id="discordName" value="YOUR_DISCORD_USERNAME" readonly />
-      <button onclick="copyDiscord()">Copy</button>
+    <p>Paid commissions only.</p>
+    <div class="note">
+      Include project details, scope, and budget in your first message.
     </div>
 
-    <div class="note">
-      Paid commissions only.<br>
-      Include project details, scope, and budget in your first message.
+    <div class="hero-actions" style="margin-top:16px">
+      <a class="btn primary" href="#" onclick="window.open('DISCORD_PROFILE_LINK','_blank')">Open Discord</a>
     </div>
   </div>
 </section>
@@ -412,12 +377,6 @@ footer{
 
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
-
-function copyDiscord(){
-  const input=document.getElementById("discordName");
-  input.select();
-  document.execCommand("copy");
-}
 
 /* background */
 const canvas=document.getElementById("bg"),ctx=canvas.getContext("2d");
