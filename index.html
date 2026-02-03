@@ -6,49 +6,127 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+:root {
+  --bg: #070812;
+  --text: #eef0ff;
+  --muted: #b2b6ff;
+
+  /* Mystichrome */
+  --m1: #7f00ff;
+  --m2: #00ffd5;
+  --m3: #00aaff;
+  --m4: #ff4fd8;
+}
+
+* { box-sizing: border-box; }
+
 html, body {
   margin: 0;
   padding: 0;
-  background: #070812;
-  color: #eef0ff;
-  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+  overflow-x: hidden;
 }
 
-/* Canvas sits behind everything */
+/* ===== SUBTLE ROBLOX BACKGROUND ===== */
 #bg {
   position: fixed;
   inset: 0;
   z-index: -1;
 }
 
-/* Your layout stays simple */
+/* ===== NAV ===== */
 nav {
   position: fixed;
   top: 0;
   width: 100%;
   height: 72px;
+  background: rgba(10,11,18,0.85);
+  backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.nav-inner {
+  max-width: 1100px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(10,11,18,0.9);
+  gap: 28px;
 }
 
-nav span {
+.logo {
   font-weight: 700;
+  font-size: 20px;
+  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m3),var(--m4));
+  background-size: 300% 300%;
+  animation: shift 8s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+.links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 15px;
+  padding: 6px 4px;
+}
+
+.links a:hover {
+  color: var(--text);
+}
+
+/* ===== PAGE ===== */
 main {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 140px 20px;
+  padding: 120px 20px;
 }
 
 section {
-  margin-bottom: 140px;
+  padding: 120px 0;
 }
 
 h1 {
-  font-size: 52px;
+  font-size: 56px;
+  margin: 0;
+}
+
+h2 {
+  font-size: 38px;
+  margin-bottom: 16px;
+}
+
+p {
+  max-width: 720px;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ===== HERO ===== */
+.hero-text {
+  margin-top: 18px;
+  font-size: 22px;
+}
+
+.hero-glow {
+  margin-top: 28px;
+  width: 320px;
+  height: 6px;
+  border-radius: 20px;
+  background: linear-gradient(90deg,var(--m1),var(--m2),var(--m4));
+  box-shadow: 0 0 45px rgba(127,0,255,0.45);
+}
+
+/* ===== ANIM ===== */
+@keyframes shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 </style>
 </head>
@@ -58,41 +136,52 @@ h1 {
 <canvas id="bg"></canvas>
 
 <nav>
-  <span>mystichromey</span>
+  <div class="nav-inner">
+    <div class="logo">mystichromey</div>
+    <div class="links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#videos">Videos</a>
+      <a href="#code">Code</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
 </nav>
 
 <main>
-  <section>
-    <h1>I make things work.</h1>
-    <p>I build Roblox systems because I enjoy solving messy problems.</p>
-  </section>
 
-  <section>
-    <h2>About</h2>
-    <p>This section exists only to prove scrolling works.</p>
-  </section>
+<section id="home">
+  <h1>I make things work.</h1>
+  <p class="hero-text">
+    I build Roblox systems because I enjoy solving messy problems and
+    turning them into something clean and reliable.
+  </p>
+  <div class="hero-glow"></div>
+</section>
+
+<section id="about">
+  <h2>About</h2>
+  <p>
+    I focus on Roblox systems that are clean, scalable, and survive real
+    players — not just test cases.
+  </p>
+</section>
+
 </main>
 
 <script>
-/* ===== LUA SCROLL TEST (UNMISSABLE) ===== */
+/* ===== SUBTLE ROBLOX DATA GRID ===== */
 const canvas = document.getElementById("bg");
 const ctx = canvas.getContext("2d");
 
-let w, h;
-let scrollY = 0;
+let w, h, t = 0;
+let mx = 0.5, my = 0.5;
 
-const luaLines = [
-  "-- LUA SCROLL TEST",
-  "local Players = game:GetService(\"Players\")",
-  "local RunService = game:GetService(\"RunService\")",
-  "",
-  "Players.PlayerAdded:Connect(function(player)",
-  "    print(player.Name)",
-  "end)",
-  "",
-  "RunService.Heartbeat:Connect(function()",
-  "    -- tick",
-  "end)"
+const tokens = [
+  "Players", "RunService", "ReplicatedStorage",
+  ":Connect", "task.wait", "Heartbeat",
+  "{}", "()", "[]", "local", "function"
 ];
 
 function resize() {
@@ -102,32 +191,46 @@ function resize() {
 window.addEventListener("resize", resize);
 resize();
 
+window.addEventListener("mousemove", e => {
+  mx = e.clientX / w;
+  my = e.clientY / h;
+});
+
 function draw() {
   ctx.clearRect(0, 0, w, h);
 
-  ctx.font = "20px monospace";
-  ctx.fillStyle = "rgba(0,255,213,0.8)";
-  ctx.textBaseline = "top";
+  const spacing = 120;
+  t += 0.15;
 
-  scrollY += 1;
+  for (let y = -spacing; y < h + spacing; y += spacing) {
+    for (let x = -spacing; x < w + spacing; x += spacing) {
+      const ox = Math.sin((y + t) * 0.01) * 12;
+      const oy = (t * 0.3) % spacing;
 
-  const lineHeight = 30;
-  const totalHeight = luaLines.length * lineHeight;
+      const dx = x + ox + (mx - 0.5) * 40;
+      const dy = y + oy;
 
-  for (let i = 0; i < 100; i++) {
-    const line = luaLines[i % luaLines.length];
-    let y = i * lineHeight - scrollY;
+      const token = tokens[(x + y) % tokens.length];
 
-    if (y < -lineHeight) {
-      y += totalHeight + h;
+      ctx.fillStyle = "rgba(127,0,255,0.08)";
+      ctx.font = "13px monospace";
+      ctx.fillText(token, dx, dy);
     }
-
-    ctx.fillText(line, 40, y);
   }
+
+  // soft mystichrome glow following mouse
+  const gx = mx * w;
+  const gy = my * h;
+  const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, 500);
+  grad.addColorStop(0, "rgba(0,255,213,0.12)");
+  grad.addColorStop(0.5, "rgba(127,0,255,0.08)");
+  grad.addColorStop(1, "rgba(0,0,0,0)");
+
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
 
   requestAnimationFrame(draw);
 }
-
 draw();
 </script>
 
