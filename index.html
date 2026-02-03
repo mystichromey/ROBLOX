@@ -512,7 +512,7 @@ footer{
         <input id="discordLink" value="slexist" readonly>
       </div>
       <button class="btn primary" id="copyDiscordBtn" type="button">Copy Add Link</button>
-      <button class="btn" id="openDiscordBtn" type="button">Open Discord</button>
+      <button class="btn" id="openDiscordBtn" type="button">Profile Link</button>
     </div>
 
     <div class="smallnote">
@@ -549,16 +549,16 @@ document.getElementById("openDiscordBtn").addEventListener("click", () => {
 });
 
 document.getElementById("copyDiscordBtn").addEventListener("click", async () => {
-  const text = DISCORD_PROFILE_URL;
+  const text = DISCORD_USERNAME;
   try {
     await navigator.clipboard.writeText(text);
     document.getElementById("copyDiscordBtn").textContent = "Copied!";
-    setTimeout(() => (document.getElementById("copyDiscordBtn").textContent = "Copy Add Link"), 1200);
+    setTimeout(() => (document.getElementById("copyDiscordBtn").textContent = "Copy Username"), 1200);
   } catch {
     discordInput.select();
     document.execCommand("copy");
     document.getElementById("copyDiscordBtn").textContent = "Copied!";
-    setTimeout(() => (document.getElementById("copyDiscordBtn").textContent = "Copy Add Link"), 1200);
+    setTimeout(() => (document.getElementById("copyDiscordBtn").textContent = "Copy Username"), 1200);
   }
 });
 
