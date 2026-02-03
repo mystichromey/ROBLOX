@@ -12,20 +12,23 @@
   --text: #eef0ff;
   --muted: #b2b6ff;
 
-  /* Mystichrome gradient */
+  /* Mystichrome */
   --m1: #7f00ff;
   --m2: #00ffd5;
   --m3: #00aaff;
   --m4: #ff4fd8;
 }
 
+/* ===== ROBLOX CLASSIC CURSOR ===== */
 * {
-  box-sizing: border-box;
+  cursor: url("data:image/svg+xml;utf8,\
+  <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32'>\
+    <polygon points='0,0 0,26 6,20 10,30 14,28 10,18 18,18' fill='black'/>\
+    <polygon points='1,1 1,24 6,19 10,28 13,27 9,18 17,18' fill='yellow'/>\
+  </svg>") 0 0, auto;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
@@ -35,7 +38,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== BACKGROUND CANVAS ===== */
+/* ===== BACKGROUND ===== */
 #bg {
   position: fixed;
   inset: 0;
@@ -47,7 +50,7 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 70px;
+  height: 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -58,37 +61,29 @@ nav {
   z-index: 100;
 }
 
-nav .logo {
+.logo {
   font-weight: 800;
   letter-spacing: 1px;
   background: linear-gradient(90deg, var(--m1), var(--m2), var(--m3), var(--m4));
   background-size: 300% 300%;
-  animation: mystiShift 8s ease infinite;
+  animation: shift 8s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-nav .links a {
-  margin-left: 26px;
+.links a {
+  margin-left: 14px;
+  padding: 8px 14px;
   font-size: 14px;
   color: var(--muted);
   text-decoration: none;
-  position: relative;
+  border-radius: 10px;
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
-nav .links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0%;
-  height: 2px;
-  background: linear-gradient(90deg, var(--m1), var(--m2), var(--m4));
-  transition: width 0.25s ease;
-}
-
-nav .links a:hover::after {
-  width: 100%;
+.links a:hover {
+  background: linear-gradient(90deg, rgba(127,0,255,0.25), rgba(0,255,213,0.25));
+  color: var(--text);
 }
 
 /* ===== SECTIONS ===== */
@@ -100,34 +95,39 @@ section {
   justify-content: center;
 }
 
-h1 {
-  font-size: 56px;
-  margin: 0;
-}
-
-h2 {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
+h1 { font-size: 56px; margin: 0; }
+h2 { font-size: 36px; margin-bottom: 20px; }
 
 p {
   max-width: 720px;
-  color: var(--muted);
   font-size: 18px;
   line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ===== TYPING EFFECT ===== */
+.type {
+  white-space: pre-line;
+  border-right: 2px solid var(--m2);
+  padding-right: 6px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
 }
 
 /* ===== HERO ===== */
 #home h1 span {
   background: linear-gradient(90deg, var(--m1), var(--m2), var(--m3), var(--m4));
   background-size: 300% 300%;
-  animation: mystiShift 10s ease infinite;
+  animation: shift 10s ease infinite;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .hero-glow {
-  margin-top: 32px;
+  margin-top: 30px;
   width: 360px;
   height: 8px;
   border-radius: 20px;
@@ -139,13 +139,13 @@ p {
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 24px;
+  gap: 26px;
   margin-top: 40px;
 }
 
 .card {
   background: linear-gradient(180deg, #16183a, #0b0d22);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 26px;
   border: 1px solid rgba(255,255,255,0.07);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -156,25 +156,48 @@ p {
   box-shadow: 0 0 60px rgba(127,0,255,0.35);
 }
 
-/* ===== FOOTER ===== */
+/* ===== CONTACT CARDS ===== */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.contact {
+  padding: 28px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #14163a, #0a0c22);
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 60px rgba(0,255,213,0.35);
+}
+
+.contact span {
+  display: block;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
 footer {
   padding: 60px;
   text-align: center;
   color: var(--muted);
 }
 
-/* ===== MOBILE ===== */
 @media (max-width: 768px) {
-  section {
-    padding: 120px 28px;
-  }
-  h1 {
-    font-size: 40px;
-  }
+  section { padding: 120px 28px; }
+  h1 { font-size: 40px; }
 }
 
-/* ===== ANIMS ===== */
-@keyframes mystiShift {
+@keyframes shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
@@ -200,161 +223,70 @@ footer {
 
 <section id="home">
   <h1>Roblox <span>Systems Scripter</span></h1>
-  <p>
-    I build scalable Roblox systems with clean architecture,
-    server authority, and performance-aware logic.
-  </p>
+  <p class="type" data-text="I build scalable Roblox systems with clean architecture, server authority, and performance-aware logic."></p>
   <div class="hero-glow"></div>
 </section>
 
 <section id="about">
   <h2>About</h2>
-  <p>
-    Focused on gameplay systems, UI logic, matchmaking,
-    and clean client/server separation.
-  </p>
+  <p class="type" data-text="Focused on gameplay systems, UI logic, matchmaking, and clean client/server separation."></p>
 </section>
 
 <section id="work">
   <h2>Work</h2>
   <div class="cards">
-    <div class="card">
-      <h3>Matchmaking</h3>
-      <p>Queue logic, teleport flow, server safety.</p>
-    </div>
-    <div class="card">
-      <h3>Mutations</h3>
-      <p>Timed effects, cleanup, authority.</p>
-    </div>
-    <div class="card">
-      <h3>UI Systems</h3>
-      <p>Responsive ScreenGui & SurfaceGui.</p>
-    </div>
+    <div class="card"><h3>Matchmaking</h3><p>Queue logic, teleport flow, server safety.</p></div>
+    <div class="card"><h3>Mutations</h3><p>Timed effects, cleanup, authority.</p></div>
+    <div class="card"><h3>UI Systems</h3><p>ScreenGui & SurfaceGui logic.</p></div>
   </div>
 </section>
 
 <section id="videos">
   <h2>Videos</h2>
-  <p>Gameplay and system demos coming soon.</p>
+  <p class="type" data-text="Gameplay demos and system showcases coming soon."></p>
 </section>
 
 <section id="code">
   <h2>Code</h2>
-  <p>
-    <a href="https://github.com/mystichromey" target="_blank">
-      github.com/mystichromey
-    </a>
-  </p>
+  <p><a href="https://github.com/mystichromey" target="_blank">github.com/mystichromey</a></p>
 </section>
 
 <section id="contact">
   <h2>Contact</h2>
-  <p>
-    Discord:
-    <a href="https://discord.com/users/831900690648399930" target="_blank">
-      mystichromey
+  <div class="contact-cards">
+    <a class="contact" href="https://discord.com/users/831900690648399930" target="_blank">
+      Discord
+      <span>Main / Preferred Contact</span>
     </a>
-  </p>
-  <p>
-    Roblox:
-    <a href="https://www.roblox.com/users/2397920816/profile" target="_blank">
-      Profile
+    <a class="contact" href="https://www.roblox.com/users/2397920816/profile" target="_blank">
+      Roblox Profile
+      <span>Identity & Work</span>
     </a>
-  </p>
+  </div>
 </section>
 
-<footer>
-  © mystichromey · Roblox Developer
-</footer>
+<footer>© mystichromey · Roblox Developer</footer>
 
 <script>
-const canvas = document.getElementById("bg");
-const ctx = canvas.getContext("2d");
+/* ===== TYPING ON SCROLL ===== */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    if (el.dataset.done) return;
+    el.dataset.done = true;
 
-let w, h;
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-const nodes = [];
-const NODE_COUNT = Math.floor((w * h) / 16000);
-
-for (let i = 0; i < NODE_COUNT; i++) {
-  nodes.push({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: (Math.random() - 0.5) * 0.6,
-    vy: (Math.random() - 0.5) * 0.6
+    const text = el.dataset.text;
+    let i = 0;
+    const interval = setInterval(() => {
+      el.textContent += text[i];
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, 20);
   });
-}
+}, { threshold: 0.5 });
 
-const mouse = { x: 0, y: 0, active: false };
-
-window.addEventListener("mousemove", e => {
-  mouse.x = e.clientX;
-  mouse.y = e.clientY;
-  mouse.active = true;
-});
-window.addEventListener("mouseleave", () => {
-  mouse.active = false;
-});
-
-function tick() {
-  ctx.clearRect(0, 0, w, h);
-
-  for (let i = 0; i < nodes.length; i++) {
-    const a = nodes[i];
-
-    a.x += a.vx;
-    a.y += a.vy;
-
-    if (a.x < 0 || a.x > w) a.vx *= -1;
-    if (a.y < 0 || a.y > h) a.vy *= -1;
-
-    if (mouse.active) {
-      const dx = a.x - mouse.x;
-      const dy = a.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 200) {
-        a.vx += dx / dist * 0.05;
-        a.vy += dy / dist * 0.05;
-      }
-    }
-
-    for (let j = i + 1; j < nodes.length; j++) {
-      const b = nodes[j];
-      const dx = a.x - b.x;
-      const dy = a.y - b.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 140) {
-        ctx.strokeStyle = `rgba(127,0,255,${1 - dist / 140})`;
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      }
-    }
-
-    ctx.fillStyle = "#c8ccff";
-    ctx.beginPath();
-    ctx.arc(a.x, a.y, 1.6, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  if (mouse.active) {
-    ctx.beginPath();
-    ctx.arc(mouse.x, mouse.y, 120, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(0,255,213,0.15)";
-    ctx.stroke();
-  }
-
-  requestAnimationFrame(tick);
-}
-tick();
+document.querySelectorAll(".type").forEach(el => observer.observe(el));
 </script>
 
 </body>
